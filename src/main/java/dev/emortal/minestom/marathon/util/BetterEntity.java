@@ -10,23 +10,23 @@ import net.minestom.server.instance.Chunk;
 import net.minestom.server.utils.chunk.ChunkUtils;
 import org.jetbrains.annotations.NotNull;
 
-public class BetterEntity extends Entity {
+public final class BetterEntity extends Entity {
 
-    public boolean ticking = true;
-    public boolean hasDrag = true;
-    public boolean hasGravityDrag = true;
+    private boolean hasDrag = true;
+    private boolean hasGravityDrag = true;
 
     public BetterEntity(@NotNull EntityType entityType) {
         super(entityType);
     }
 
     @Override
-    protected void updateVelocity(boolean wasOnGround, boolean flying, Pos positionBeforeMove, Vec newVelocity) {
-        EntitySpawnType type = entityType.registry().spawnType();
-        final double airDrag = type == EntitySpawnType.LIVING || type == EntitySpawnType.PLAYER ? 0.91 : 0.98;
+    protected void updateVelocity(boolean wasOnGround, boolean flying, @NotNull Pos positionBeforeMove, @NotNull Vec newVelocity) {
+        EntitySpawnType type = this.entityType.registry().spawnType();
+        double airDrag = type == EntitySpawnType.LIVING || type == EntitySpawnType.PLAYER ? 0.91 : 0.98;
+
         double drag;
         if (wasOnGround) {
-            final Chunk chunk = ChunkUtils.retrieve(instance, currentChunk, position);
+            Chunk chunk = ChunkUtils.retrieve(this.instance, this.currentChunk, this.position);
             synchronized (chunk) {
                 drag = chunk.getBlock(positionBeforeMove.sub(0, 0.5000001, 0)).registry().friction() * airDrag;
             }
@@ -34,15 +34,15 @@ public class BetterEntity extends Entity {
             drag = airDrag;
         }
 
-        double gravity = flying ? 0 : gravityAcceleration;
+        double gravity = flying ? 0 : this.gravityAcceleration;
         double gravityDrag;
 
-        if (!hasGravityDrag) {
+        if (!this.hasGravityDrag) {
             gravityDrag = 1.0;
         } else {
-            gravityDrag = flying ? 0.6 : (1 - gravityDragPerTick);
+            gravityDrag = flying ? 0.6 : (1 - this.gravityDragPerTick);
         }
-        if (!hasDrag) drag = 1.0;
+        if (!this.hasDrag) drag = 1.0;
 
         double finalDrag = drag;
         this.velocity = newVelocity
@@ -60,38 +60,18 @@ public class BetterEntity extends Entity {
 
     @Override
     public void tick(long time) {
-        if (this.ticking) super.tick(time);
+        super.tick(time);
     }
 
     public void setDrag(boolean drag) {
         this.hasDrag = drag;
     }
 
-    public boolean hasDrag(boolean drag) {
-        return this.hasDrag;
-    }
-
     public void setGravityDrag(boolean drag) {
         this.hasGravityDrag = drag;
     }
 
-    public boolean hasGravityDrag(boolean drag) {
-        return this.hasGravityDrag;
-    }
-
     public void setPhysics(boolean physics) {
-        this.hasPhysics = physics;
-    }
-
-    public boolean hasPhysics() {
-        return this.hasPhysics;
-    }
-
-    public void setTicking(boolean ticking) {
-        this.ticking = ticking;
-    }
-
-    public boolean isTicking() {
-        return this.ticking;
+        super.hasPhysics = physics;
     }
 }

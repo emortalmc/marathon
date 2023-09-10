@@ -44,18 +44,19 @@ import java.util.function.Supplier;
 public final class MarathonGame extends Game {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarathonGame.class);
 
+    private static final int NEXT_BLOCKS_COUNT = 7;
     private static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("mm:ss");
     public static final Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
 
     private final @NotNull Instance instance;
+    private final @NotNull MovementListener movementListener;
+    private final @NotNull Generator generator;
+    private final @NotNull BlockAnimator animator;
+    private final @NotNull BlockPalette palette;
 
-    private @Nullable Generator generator;
-    private @Nullable BlockAnimator animator;
-    private @Nullable BlockPalette palette;
+    private final ArrayDeque<Point> blocks = new ArrayDeque<>(NEXT_BLOCKS_COUNT + 1);
 
-    private final int blockLength = 7;
-    private final ArrayDeque<Point> blocks = new ArrayDeque<>(this.blockLength + 1);
     private int score;
     private int combo;
 //    private int targetX;
@@ -66,50 +67,43 @@ public final class MarathonGame extends Game {
 
     private @Nullable Task breakingTask;
 
-    private final @NotNull MovementListener movementListener;
-
     public MarathonGame(GameCreationInfo creationInfo) {
         super(creationInfo);
 
         this.generator = DefaultGenerator.INSTANCE;
         this.animator = new SuvatAnimator();
         this.palette = BlockPalette.OVERWORLD;
-
         this.movementListener = new MovementListener(this);
 
         DimensionType dimensionType = MinecraftServer.getDimensionTypeManager().getDimension(NamespaceID.from("fullbright"));
-        instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimensionType);
-        instance.setTimeRate(0);
-        instance.setTimeUpdate(null);
-        getEventNode().addListener(PlayerMoveEvent.class, this.movementListener::onMove);
+        this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimensionType);
+        this.instance.setTimeRate(0);
+        this.instance.setTimeUpdate(null);
+
+        this.getEventNode().addListener(PlayerMoveEvent.class, this.movementListener::onMove);
     }
 
     @Override
     public void start() {
-        if (getCreationInfo().playerIds().size() > 1) {
+        if (this.getCreationInfo().playerIds().size() > 1) {
             LOGGER.error("There should be no more than one player joining Marathon");
             return;
         }
 
-        reset();
+        this.reset();
     }
 
     @Override
     public void onJoin(@NotNull Player player) {
-
     }
 
     @Override
     public void onLeave(@NotNull Player player) {
-
     }
 
     @Override
     public void cleanUp() {
-        for (final Player player : this.players) {
-            player.kick(Component.text("The game ended but we weren't able to connect you to a lobby. Please reconnect", NamedTextColor.RED));
-        }
-        MinecraftServer.getInstanceManager().unregisterInstance(this.instance);
+        this.instance.scheduleNextTick(MinecraftServer.getInstanceManager()::unregisterInstance);
     }
 
     public void reset() {
@@ -128,6 +122,7 @@ public final class MarathonGame extends Game {
             this.animator.destroyBlockAnimated(this, block, Block.AIR);
         }
         this.animator.reset();
+
         for (Entity entity : this.instance.getEntities()) {
             if (entity.hasTag(MARATHON_ENTITY_TAG)) entity.remove();
         }
@@ -135,12 +130,12 @@ public final class MarathonGame extends Game {
         this.blocks.clear();
         this.blocks.addLast(RESET_POINT);
 
-        for (Player player : this.players) {
+        for (Player player : this.getPlayers()) {
             player.teleport(RESET_POINT.add(0, 1, 0));
         }
         this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
 
-        this.onBlockTouch(this.blockLength, false);
+        this.onBlockTouch(NEXT_BLOCKS_COUNT, false);
     }
 
     private void refreshDisplays() {
@@ -150,7 +145,7 @@ public final class MarathonGame extends Game {
         String scorePerSecond = this.score < 2 ? "-.-" : String.valueOf(MathUtils.clamp((Math.floor(this.score / secondsTaken * 10.0) / 10.0), 0.0, 9.9));
 
         Component message = Component.text()
-                .append(Component.text(score, TextColor.fromHexString("#ff00a6"), TextDecoration.BOLD))
+                .append(Component.text(this.score, TextColor.fromHexString("#ff00a6"), TextDecoration.BOLD))
                 .append(Component.text(" | ", NamedTextColor.DARK_GRAY))
                 .append(Component.text(formattedTime, NamedTextColor.GRAY))
                 .append(Component.text(" | ", NamedTextColor.DARK_GRAY))
@@ -167,7 +162,7 @@ public final class MarathonGame extends Game {
     }
 
     private void generateNextBlock(boolean inGame) {
-        if (this.blocks.size() > this.blockLength) {
+        if (this.blocks.size() > NEXT_BLOCKS_COUNT) {
             Point firstBlockPos = this.blocks.getFirst();
             this.animator.destroyBlockAnimated(this, firstBlockPos, Block.AIR);
             this.animator.destroyBlockAnimated(this, firstBlockPos.add(0, 1, 0), Block.AIR);
@@ -253,7 +248,7 @@ public final class MarathonGame extends Game {
                 }
 
                 MarathonGame.this.playSound(Sound.sound(SoundEvent.BLOCK_WOOD_HIT, Sound.Source.MASTER, 0.5f, 1f), Sound.Emitter.self());
-                BlockPacketUtils.sendBlockDamage(instance, block, this.destroyStage);
+                BlockPacketUtils.sendBlockDamage(MarathonGame.this.instance, block, this.destroyStage);
 
                 return TaskSchedule.tick(10);
             }

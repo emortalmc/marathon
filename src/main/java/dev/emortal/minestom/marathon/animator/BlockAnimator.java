@@ -14,5 +14,4 @@ public interface BlockAnimator {
     }
 
     void reset();
-
 }

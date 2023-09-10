@@ -7,8 +7,9 @@ import org.jetbrains.annotations.NotNull;
 
 public final class MovementListener {
 
-    private final MarathonGame game;
-    public MovementListener(MarathonGame game) {
+    private final @NotNull MarathonGame game;
+
+    public MovementListener(@NotNull MarathonGame game) {
         this.game = game;
     }
 
@@ -16,18 +17,18 @@ public final class MovementListener {
         Point posUnder = event.getNewPosition().sub(0, 1, 0);
         Point posTwoUnder = event.getNewPosition().sub(0, 2, 0);
 
-        checkPosition(event.getNewPosition());
+        this.checkPosition(event.getNewPosition());
 
         int index = 0;
-        for (Point block : game.getBlocks()) {
+        for (Point block : this.game.getBlocks()) {
             if (block.sameBlock(posUnder)) break;
             if (block.sameBlock(posTwoUnder)) break;
             index++;
         }
 
-        if (index <= 0 || index == game.getBlocks().size()) return;
+        if (index <= 0 || index == this.game.getBlocks().size()) return;
 
-        game.onBlockTouch(index, true);
+        this.game.onBlockTouch(index, true);
     }
 
     private void checkPosition(@NotNull Point newPosition) {
@@ -40,7 +41,7 @@ public final class MovementListener {
         int maxZ = Integer.MIN_VALUE;
         int minZ = Integer.MAX_VALUE;
 
-        for (Point block : game.getBlocks()) {
+        for (Point block : this.game.getBlocks()) {
             if (block.blockY() > maxY) maxY = block.blockY();
             if (block.blockY() < minY) minY = block.blockY();
 
@@ -52,10 +53,10 @@ public final class MovementListener {
         }
 
         if (newPosition.blockY() < (minY - 3)) { // too far below
-            game.reset();
+            this.game.reset();
         }
 
-        if (game.isRunInvalidated()) return;
+        if (this.game.isRunInvalidated()) return;
 
         if (
                 newPosition.blockY() > (maxY + 3.5) || // too far up
@@ -63,7 +64,7 @@ public final class MovementListener {
                         newPosition.blockX() > maxX + 6 || // too far left and right
                         newPosition.blockX() < minX - 6
         ) {
-            game.setRunInvalidated(true);
+            this.game.setRunInvalidated(true);
         }
     }
 

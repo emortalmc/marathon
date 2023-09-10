@@ -6,7 +6,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 
-public class Main {
+public final class Main {
 
     public static void main(String[] args) {
         MinestomGameServer.create(() -> {
@@ -20,5 +20,4 @@ public class Main {
                     .build();
         });
     }
-
 }

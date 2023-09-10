@@ -46,15 +46,18 @@ public final class SuvatAnimator implements BlockAnimator {
 
         lastEntity.setInstance(game.getSpawningInstance(), realLastPoint);
 
-        lastEntity.scheduler().buildTask(() -> {
-            lastEntity.remove();
-            game.getSpawningInstance().setBlock(point, block);
-            this.lastValidBlock = point;
-        }).delay(TaskSchedule.tick(Math.max((int) Math.ceil(time), 1))).schedule();
+        lastEntity.scheduler()
+                .buildTask(() -> {
+                    lastEntity.remove();
+                    game.getSpawningInstance().setBlock(point, block);
+                    this.lastValidBlock = point;
+                })
+                .delay(TaskSchedule.tick(Math.max((int) Math.ceil(time), 1)))
+                .schedule();
     }
 
     @Override
     public void reset() {
-        lastValidBlock = null;
+        this.lastValidBlock = null;
     }
 }

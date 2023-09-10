@@ -15,6 +15,6 @@ public final class NoAnimator implements BlockAnimator {
 
     @Override
     public void reset() {
-
+        // do nothing
     }
 }

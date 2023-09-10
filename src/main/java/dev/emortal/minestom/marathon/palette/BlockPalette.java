@@ -22,13 +22,13 @@ public enum BlockPalette {
             Block.MOSS_BLOCK
     );
 
-    private final @NotNull Block@NotNull[] blocks;
+    private final @NotNull Block[] blocks;
 
-    BlockPalette(@NotNull Material displayItem, @NotNull Component display, @NotNull SoundEvent soundEffect, @NotNull Block@NotNull... blocks) {
+    BlockPalette(@NotNull Material displayItem, @NotNull Component display, @NotNull SoundEvent soundEffect, @NotNull Block... blocks) {
         this.blocks = blocks;
     }
 
-    public @NotNull Block@NotNull[] getBlocks() {
+    public @NotNull Block[] getBlocks() {
         return this.blocks;
     }
 }

@@ -44,15 +44,18 @@ public final class PathAnimator implements BlockAnimator {
         this.lastEntity.setInstance(game.getSpawningInstance(), realLastPoint);
 
         Entity finalEntity = this.lastEntity;
-        this.lastEntity.scheduler().buildTask(() -> {
-            finalEntity.remove();
-            game.getSpawningInstance().setBlock(point, block);
-        }).delay(TaskSchedule.tick((int) (TIME_TO_ANIMATE * MinecraftServer.TICK_PER_SECOND))).schedule();
+        this.lastEntity.scheduler()
+                .buildTask(() -> {
+                    finalEntity.remove();
+                    game.getSpawningInstance().setBlock(point, block);
+                })
+                .delay(TaskSchedule.tick((int) (TIME_TO_ANIMATE * MinecraftServer.TICK_PER_SECOND)))
+                .schedule();
 //        lastEntity.scheduleRemove(Duration.ofMillis((long) (timeToAnimate * 1000)));
     }
 
     @Override
     public void reset() {
-        lastEntity = null;
+        this.lastEntity = null;
     }
 }

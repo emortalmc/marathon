@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    java
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -17,12 +17,11 @@ repositories {
 }
 
 dependencies {
+    implementation("dev.emortal.minestom:game-sdk:bf1bede")
+
     implementation("dev.hollowcube:polar:1.3.1")
     implementation("com.github.EmortalMC:NBStom:b03d6a032a")
     implementation("com.github.EmortalMC:rayfast:9e5accbdfd")
-
-    implementation("dev.emortal.minestom:core:9c52249")
-    implementation("dev.emortal.minestom:game-sdk:f6d9300")
 
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
 
@@ -38,20 +37,19 @@ java {
 }
 
 tasks {
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
+    compileJava {
         options.compilerArgs.addAll(listOf(
                 "--release", "20",
                 "--enable-preview"
         ))
     }
 
-    named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    shadowJar {
         mergeServiceFiles()
 
         manifest {
             attributes(
-                "Main-Class" to "dev.emortal.minestom.lobby.Entrypoint",
+                "Main-Class" to "dev.emortal.minestom.marathon.Main",
                 "Multi-Release" to true
             )
         }
@@ -62,5 +60,7 @@ tasks {
         isReproducibleFileOrder = true
     }
 
-    build { dependsOn(shadowJar) }
+    build {
+        dependsOn(shadowJar)
+    }
 }
