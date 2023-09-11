@@ -20,7 +20,7 @@ dependencies {
     implementation("dev.emortal.minestom:game-sdk:c74da89")
 
     implementation("dev.hollowcube:polar:1.3.1")
-    implementation("dev.emortal:rayfast:a4a8041")
+    implementation("dev.emortal:rayfast:4331995")
 
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
 }
