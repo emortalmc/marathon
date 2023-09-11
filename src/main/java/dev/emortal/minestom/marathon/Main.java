@@ -10,8 +10,7 @@ public final class Main {
 
     public static void main(String[] args) {
         MinestomGameServer.create(() -> {
-            DimensionType fullbright = DimensionType.builder(NamespaceID.from("fullbright")).ambientLight(1f).build();
-            MinecraftServer.getDimensionTypeManager().addDimension(fullbright);
+            MinecraftServer.getDimensionTypeManager().addDimension(MarathonGame.FULLBRIGHT_DIMENSION);
 
             return GameSdkConfig.builder()
                     .minPlayers(1)

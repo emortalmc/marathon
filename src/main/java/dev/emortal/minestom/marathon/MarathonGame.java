@@ -44,6 +44,8 @@ import java.util.function.Supplier;
 public final class MarathonGame extends Game {
     private static final Logger LOGGER = LoggerFactory.getLogger(MarathonGame.class);
 
+    static final @NotNull DimensionType FULLBRIGHT_DIMENSION = DimensionType.builder(NamespaceID.from("fullbright")).ambientLight(1F).build();
+
     private static final int NEXT_BLOCKS_COUNT = 7;
     private static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("mm:ss");
@@ -67,7 +69,7 @@ public final class MarathonGame extends Game {
 
     private @Nullable Task breakingTask;
 
-    public MarathonGame(GameCreationInfo creationInfo) {
+    public MarathonGame(@NotNull GameCreationInfo creationInfo) {
         super(creationInfo);
 
         this.generator = DefaultGenerator.INSTANCE;
@@ -75,8 +77,7 @@ public final class MarathonGame extends Game {
         this.palette = BlockPalette.OVERWORLD;
         this.movementListener = new MovementListener(this);
 
-        DimensionType dimensionType = MinecraftServer.getDimensionTypeManager().getDimension(NamespaceID.from("fullbright"));
-        this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimensionType);
+        this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(FULLBRIGHT_DIMENSION);
         this.instance.setTimeRate(0);
         this.instance.setTimeUpdate(null);
 

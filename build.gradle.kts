@@ -17,17 +17,12 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.emortal.minestom:game-sdk:bf1bede")
+    implementation("dev.emortal.minestom:game-sdk:c74da89")
 
     implementation("dev.hollowcube:polar:1.3.1")
-    implementation("com.github.EmortalMC:NBStom:b03d6a032a")
-    implementation("com.github.EmortalMC:rayfast:9e5accbdfd")
+    implementation("dev.emortal:rayfast:a4a8041")
 
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
-
-//    implementation("dev.emortal.api:kurushimi-sdk:e4d7b15") { // should be provided by core
-//        exclude(group = "dev.emortal.api", module = "grpc-sdk")
-//    }
 }
 
 java {
