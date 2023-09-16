@@ -9,6 +9,7 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.other.FallingBlockMeta;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +21,7 @@ public final class PathAnimator implements BlockAnimator {
     private @Nullable BetterEntity lastEntity = null;
 
     @Override
-    public void setBlockAnimated(@NotNull MarathonGame game, @NotNull Point point, @NotNull Block block, @NotNull Point lastPoint) {
+    public void setBlockAnimated(@NotNull Instance instance, @NotNull Point point, @NotNull Block block, @NotNull Point lastPoint) {
         Pos realLastPoint = Pos.fromPoint(lastPoint.add(0.5, 0, 0.5));
         if (this.lastEntity != null && !this.lastEntity.isRemoved()) {
             realLastPoint = this.lastEntity.getPosition();
@@ -35,19 +36,18 @@ public final class PathAnimator implements BlockAnimator {
         FallingBlockMeta meta = (FallingBlockMeta) this.lastEntity.getEntityMeta();
         meta.setBlock(block);
 
-        this.lastEntity.setVelocity(
-                Vec.fromPoint(point.sub(realLastPoint))
-                        .normalize()
-                        .mul(point.distance(realLastPoint) / TIME_TO_ANIMATE)
-        );
+        Vec newVelocity = Vec.fromPoint(point.sub(realLastPoint))
+                .normalize()
+                .mul(point.distance(realLastPoint) / TIME_TO_ANIMATE);
+        this.lastEntity.setVelocity(newVelocity);
 
-        this.lastEntity.setInstance(game.getSpawningInstance(), realLastPoint);
+        this.lastEntity.setInstance(instance, realLastPoint);
 
         Entity finalEntity = this.lastEntity;
         this.lastEntity.scheduler()
                 .buildTask(() -> {
                     finalEntity.remove();
-                    game.getSpawningInstance().setBlock(point, block);
+                    instance.setBlock(point, block);
                 })
                 .delay(TaskSchedule.tick((int) (TIME_TO_ANIMATE * MinecraftServer.TICK_PER_SECOND)))
                 .schedule();

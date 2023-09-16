@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
@@ -49,10 +50,9 @@ public final class MarathonGame extends Game {
     private static final int NEXT_BLOCKS_COUNT = 7;
     private static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("mm:ss");
-    public static final Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
+    public static final @NotNull Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
 
     private final @NotNull Instance instance;
-    private final @NotNull MovementListener movementListener;
     private final @NotNull Generator generator;
     private final @NotNull BlockAnimator animator;
     private final @NotNull BlockPalette palette;
@@ -75,13 +75,13 @@ public final class MarathonGame extends Game {
         this.generator = DefaultGenerator.INSTANCE;
         this.animator = new SuvatAnimator();
         this.palette = BlockPalette.OVERWORLD;
-        this.movementListener = new MovementListener(this);
 
         this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(FULLBRIGHT_DIMENSION);
         this.instance.setTimeRate(0);
         this.instance.setTimeUpdate(null);
 
-        this.getEventNode().addListener(PlayerMoveEvent.class, this.movementListener::onMove);
+        MovementListener movementListener = new MovementListener(this);
+        this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
     }
 
     @Override
@@ -120,7 +120,7 @@ public final class MarathonGame extends Game {
         this.startTimestamp = System.currentTimeMillis();
 
         for (Point block : this.blocks) {
-            this.animator.destroyBlockAnimated(this, block, Block.AIR);
+            this.animator.destroyBlockAnimated(this.instance, block, Block.AIR);
         }
         this.animator.reset();
 
@@ -143,7 +143,7 @@ public final class MarathonGame extends Game {
         long millisTaken = this.startTimestamp == -1 ? 0 : System.currentTimeMillis() - this.startTimestamp;
         String formattedTime = DATE_FORMAT.format(new Date(millisTaken));
         double secondsTaken = millisTaken / 1000.0;
-        String scorePerSecond = this.score < 2 ? "-.-" : String.valueOf(MathUtils.clamp((Math.floor(this.score / secondsTaken * 10.0) / 10.0), 0.0, 9.9));
+        String scorePerSecond = this.score < 2 ? "-.-" : String.valueOf(MathUtils.clamp(Math.floor(this.score / secondsTaken * 10.0) / 10.0, 0.0, 9.9));
 
         Component message = Component.text()
                 .append(Component.text(this.score, TextColor.fromHexString("#ff00a6"), TextDecoration.BOLD))
@@ -165,8 +165,8 @@ public final class MarathonGame extends Game {
     private void generateNextBlock(boolean inGame) {
         if (this.blocks.size() > NEXT_BLOCKS_COUNT) {
             Point firstBlockPos = this.blocks.getFirst();
-            this.animator.destroyBlockAnimated(this, firstBlockPos, Block.AIR);
-            this.animator.destroyBlockAnimated(this, firstBlockPos.add(0, 1, 0), Block.AIR);
+            this.animator.destroyBlockAnimated(this.instance, firstBlockPos, Block.AIR);
+            this.animator.destroyBlockAnimated(this.instance, firstBlockPos.add(0, 1, 0), Block.AIR);
 
             this.blocks.removeFirst();
         }
@@ -183,11 +183,11 @@ public final class MarathonGame extends Game {
         }
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        Block[] blocks = this.palette.getBlocks();
-        Block randomBlock = blocks[random.nextInt(blocks.length)];
+        List<Block> blocks = this.palette.getBlocks();
+        Block randomBlock = blocks.get(random.nextInt(blocks.size()));
 
         if (inGame) {
-            this.animator.setBlockAnimated(this, nextBlockPos, randomBlock, lastBlockPos);
+            this.animator.setBlockAnimated(this.instance, nextBlockPos, randomBlock, lastBlockPos);
         } else {
             this.instance.setBlock(nextBlockPos, randomBlock);
         }

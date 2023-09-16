@@ -16,4 +16,7 @@ public final class BlockPacketUtils {
     public static void sendBlockBreak(@NotNull PacketGroupingAudience audience, @NotNull Point point, @NotNull Block block) {
         audience.sendGroupedPacket(new EffectPacket(2001, point, block.stateId(), false));
     }
+
+    private BlockPacketUtils() {
+    }
 }

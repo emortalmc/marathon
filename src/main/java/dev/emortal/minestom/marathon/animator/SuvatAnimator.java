@@ -7,6 +7,7 @@ import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.other.FallingBlockMeta;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
 import org.jetbrains.annotations.NotNull;
@@ -19,9 +20,10 @@ public final class SuvatAnimator implements BlockAnimator {
     private @Nullable Point lastValidBlock = null;
 
     @Override
-    public void setBlockAnimated(@NotNull MarathonGame game, @NotNull Point point, @NotNull Block block, @NotNull Point lastPoint) {
-        if (this.lastValidBlock == null) this.lastValidBlock = lastPoint;
-
+    public void setBlockAnimated(@NotNull Instance instance, @NotNull Point point, @NotNull Block block, @NotNull Point lastPoint) {
+        if (this.lastValidBlock == null) {
+            this.lastValidBlock = lastPoint;
+        }
         Point realLastPoint = this.lastValidBlock.add(0.5, 0, 0.5);
 
         BetterEntity lastEntity = new BetterEntity(EntityType.FALLING_BLOCK);
@@ -29,7 +31,6 @@ public final class SuvatAnimator implements BlockAnimator {
         lastEntity.setDrag(false);
         lastEntity.setGravityDrag(false);
         lastEntity.setPhysics(false);
-
         lastEntity.setGravity(0.0, -GRAVITY);
 
         FallingBlockMeta meta = (FallingBlockMeta) lastEntity.getEntityMeta();
@@ -44,12 +45,12 @@ public final class SuvatAnimator implements BlockAnimator {
         Vec combinedVelocity = Vec.fromPoint(velocityXZ.withY(velocityY));
         lastEntity.setVelocity(combinedVelocity.mul(MinecraftServer.TICK_PER_SECOND));
 
-        lastEntity.setInstance(game.getSpawningInstance(), realLastPoint);
+        lastEntity.setInstance(instance, realLastPoint);
 
         lastEntity.scheduler()
                 .buildTask(() -> {
                     lastEntity.remove();
-                    game.getSpawningInstance().setBlock(point, block);
+                    instance.setBlock(point, block);
                     this.lastValidBlock = point;
                 })
                 .delay(TaskSchedule.tick(Math.max((int) Math.ceil(time), 1)))

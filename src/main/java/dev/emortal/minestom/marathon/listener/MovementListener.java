@@ -32,24 +32,24 @@ public final class MovementListener {
     }
 
     private void checkPosition(@NotNull Point newPosition) {
-        int maxY = Integer.MIN_VALUE;
-        int minY = Integer.MAX_VALUE;
-
         int maxX = 0;
         int minX = 0;
+
+        int maxY = Integer.MIN_VALUE;
+        int minY = Integer.MAX_VALUE;
 
         int maxZ = Integer.MIN_VALUE;
         int minZ = Integer.MAX_VALUE;
 
         for (Point block : this.game.getBlocks()) {
-            if (block.blockY() > maxY) maxY = block.blockY();
+            if (block.blockX() < minX) minX = block.blockX();
+            if (block.blockX() > maxX) maxX = block.blockX();
+
             if (block.blockY() < minY) minY = block.blockY();
+            if (block.blockY() > maxY) maxY = block.blockY();
 
             if (block.blockZ() < minZ) minZ = block.blockZ();
             if (block.blockZ() > maxZ) maxZ = block.blockZ();
-
-            if (block.blockX() > maxX) maxX = block.blockX();
-            if (block.blockX() < minX) minX = block.blockX();
         }
 
         if (newPosition.blockY() < (minY - 3)) { // too far below

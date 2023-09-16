@@ -21,12 +21,12 @@ public final class BetterEntity extends Entity {
 
     @Override
     protected void updateVelocity(boolean wasOnGround, boolean flying, @NotNull Pos positionBeforeMove, @NotNull Vec newVelocity) {
-        EntitySpawnType type = this.entityType.registry().spawnType();
+        EntitySpawnType type = super.entityType.registry().spawnType();
         double airDrag = type == EntitySpawnType.LIVING || type == EntitySpawnType.PLAYER ? 0.91 : 0.98;
 
         double drag;
         if (wasOnGround) {
-            Chunk chunk = ChunkUtils.retrieve(this.instance, this.currentChunk, this.position);
+            Chunk chunk = ChunkUtils.retrieve(super.instance, super.currentChunk, super.position);
             synchronized (chunk) {
                 drag = chunk.getBlock(positionBeforeMove.sub(0, 0.5000001, 0)).registry().friction() * airDrag;
             }
@@ -34,33 +34,28 @@ public final class BetterEntity extends Entity {
             drag = airDrag;
         }
 
-        double gravity = flying ? 0 : this.gravityAcceleration;
+        double gravity = flying ? 0 : super.gravityAcceleration;
         double gravityDrag;
 
         if (!this.hasGravityDrag) {
             gravityDrag = 1.0;
         } else {
-            gravityDrag = flying ? 0.6 : (1 - this.gravityDragPerTick);
+            gravityDrag = flying ? 0.6 : (1 - super.gravityDragPerTick);
         }
         if (!this.hasDrag) drag = 1.0;
 
         double finalDrag = drag;
-        this.velocity = newVelocity
+        super.velocity = newVelocity
                 // Apply gravity and drag
                 .apply((x, y, z) -> new Vec(
                         x * finalDrag,
-                        !hasNoGravity() ? (y - gravity) * gravityDrag : y,
+                        !super.hasNoGravity() ? (y - gravity) * gravityDrag : y,
                         z * finalDrag
                 ))
                 // Convert from block/tick to block/sec
                 .mul(MinecraftServer.TICK_PER_SECOND)
                 // Prevent infinitely decreasing velocity
                 .apply(Vec.Operator.EPSILON);
-    }
-
-    @Override
-    public void tick(long time) {
-        super.tick(time);
     }
 
     public void setDrag(boolean drag) {

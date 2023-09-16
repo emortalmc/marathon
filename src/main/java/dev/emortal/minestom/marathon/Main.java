@@ -3,8 +3,6 @@ package dev.emortal.minestom.marathon;
 import dev.emortal.minestom.gamesdk.MinestomGameServer;
 import dev.emortal.minestom.gamesdk.config.GameSdkConfig;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.utils.NamespaceID;
-import net.minestom.server.world.DimensionType;
 
 public final class Main {
 

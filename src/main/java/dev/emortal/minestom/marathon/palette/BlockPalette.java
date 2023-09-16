@@ -7,6 +7,8 @@ import net.minestom.server.item.Material;
 import net.minestom.server.sound.SoundEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public enum BlockPalette {
 
     OVERWORLD(
@@ -22,13 +24,13 @@ public enum BlockPalette {
             Block.MOSS_BLOCK
     );
 
-    private final @NotNull Block[] blocks;
+    private final @NotNull List<Block> blocks;
 
     BlockPalette(@NotNull Material displayItem, @NotNull Component display, @NotNull SoundEvent soundEffect, @NotNull Block... blocks) {
-        this.blocks = blocks;
+        this.blocks = List.of(blocks);
     }
 
-    public @NotNull Block[] getBlocks() {
+    public @NotNull List<Block> getBlocks() {
         return this.blocks;
     }
 }
