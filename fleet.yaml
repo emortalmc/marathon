@@ -1,0 +1,68 @@
+apiVersion: agones.dev/v1
+kind: Fleet
+
+metadata:
+  name: marathon
+  namespace: emortalmc
+
+spec:
+  scheduling: Distributed
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+
+  template:
+    spec:
+      ports:
+        - name: default
+          portPolicy: Dynamic
+          containerPort: 25565
+          protocol: TCP
+
+      health:
+        initialDelaySeconds: 5
+        periodSeconds: 15
+        failureThreshold: 2
+
+      template:
+        spec:
+          containers:
+            - name: marathon
+              image: ghcr.io/emortalmc/marathon:2acde621fd9aae63984c2d8f15b8eb05f7bc3772
+
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 768Mi
+                limits:
+                  cpu: "1"
+                  memory: 768Mi
+
+              env:
+<<<<<<< HEAD
+                - name: VELOCITY_FORWARDING_SECRET
+=======
+                - name: minestom.velocity-forwarding-secret
+>>>>>>> e6fcbf2 (Add deployment configs)
+                  valueFrom:
+                    secretKeyRef:
+                      name: velocity-forwarding-token
+                      key: forwarding.secret
+                      optional: false
+                - name: KAFKA_HOST
+                  value: default-kafka-bootstrap
+                - name: KAFKA_PORT
+                  value: "9092"
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: FLEET_NAME
+<<<<<<< HEAD
+                  value: marathon
+=======
+                  value: marathon
+>>>>>>> e6fcbf2 (Add deployment configs)

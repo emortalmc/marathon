@@ -1,0 +1,22 @@
+apiVersion: autoscaling.agones.dev/v1
+kind: FleetAutoscaler
+<<<<<<< HEAD
+
+=======
+>>>>>>> e6fcbf2 (Add deployment configs)
+metadata:
+  name: marathon
+  namespace: emortalmc
+
+spec:
+  fleetName: marathon
+  policy:
+    type: Buffer
+    buffer:
+      bufferSize: 1
+      minReplicas: 1
+<<<<<<< HEAD
+      maxReplicas: 5
+=======
+      maxReplicas: 5
+>>>>>>> e6fcbf2 (Add deployment configs)
