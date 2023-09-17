@@ -42,7 +42,7 @@ spec:
                   memory: 768Mi
 
               env:
-                - name: minestom.velocity-forwarding-secret
+                - name: VELOCITY_FORWARDING_SECRET
                   valueFrom:
                     secretKeyRef:
                       name: velocity-forwarding-token
