@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM eclipse-temurin:17-jre
+FROM --platform=$BUILDPLATFORM eclipse-temurin:20-jre
 
 RUN mkdir /app
 WORKDIR /app
@@ -9,4 +9,4 @@ RUN apt-get install wget \
 
 COPY build/libs/*-all.jar /app/marathon.jar
 
-CMD ["java", "-jar", "/app/marathon.jar"]
+CMD ["java", "--enable-preview", "-jar", "/app/marathon.jar"]
