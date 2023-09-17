@@ -16,6 +16,8 @@ spec:
 
   template:
     spec:
+      players:
+        initialCapacity: 100
       ports:
         - name: default
           portPolicy: Dynamic
