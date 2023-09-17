@@ -2,7 +2,7 @@ apiVersion: agones.dev/v1
 kind: Fleet
 
 metadata:
-  name: lazertag
+  name: marathon
   namespace: emortalmc
 
 spec:
@@ -30,8 +30,8 @@ spec:
       template:
         spec:
           containers:
-            - name: lazertag
-              image: ghcr.io/emortalmc/lazertag:d7bbab5e999c4d4e83ff409d408be9186ad1e9b7
+            - name: marathon
+              image: ghcr.io/emortalmc/marathon:2acde621fd9aae63984c2d8f15b8eb05f7bc3772
 
               resources:
                 requests:
@@ -57,4 +57,4 @@ spec:
                     fieldRef:
                       fieldPath: metadata.namespace
                 - name: FLEET_NAME
-                  value: lazertag
+                  value: marathon
