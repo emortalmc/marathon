@@ -80,6 +80,8 @@ public final class MarathonGame extends Game {
         this.instance.setTimeRate(0);
         this.instance.setTimeUpdate(null);
 
+        this.startRefreshDisplaysTask();
+
         MovementListener movementListener = new MovementListener(this);
         this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
     }
@@ -137,6 +139,10 @@ public final class MarathonGame extends Game {
         this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
 
         this.onBlockTouch(NEXT_BLOCKS_COUNT, false);
+    }
+
+    private void startRefreshDisplaysTask() {
+        this.instance.scheduler().buildTask(this::refreshDisplays).repeat(TaskSchedule.tick(20)).schedule();
     }
 
     private void refreshDisplays() {
