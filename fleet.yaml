@@ -33,7 +33,7 @@ spec:
         spec:
           containers:
             - name: marathon
-              image: ghcr.io/emortalmc/marathon:f6fe3c49f1d5d4e20f05c47c06f2eb931f02c6bf
+              image: ghcr.io/emortalmc/marathon:ca2d58c2e5bb0370797f92f27ea7a2c20a8f6110
 
               resources:
                 requests:
