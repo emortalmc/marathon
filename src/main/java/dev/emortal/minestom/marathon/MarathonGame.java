@@ -59,7 +59,7 @@ public final class MarathonGame extends Game {
     private final @NotNull BlockPalette palette;
 
     private final ArrayDeque<Point> blocks = new ArrayDeque<>(NEXT_BLOCKS_COUNT + 1);
-    private final AtomicBoolean running = new AtomicBoolean(false);
+    private final AtomicBoolean playerJoined = new AtomicBoolean(false);
 
     private int score;
     private int combo;
@@ -90,19 +90,21 @@ public final class MarathonGame extends Game {
 
     @Override
     public void start() {
-        // Do nothing - game is started on join
+        this.startTimestamp = System.currentTimeMillis();
+        this.blocks.addLast(RESET_POINT);
+        this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
+        this.generateNextBlocks(NEXT_BLOCKS_COUNT, false);
     }
 
     @Override
     public void onJoin(@NotNull Player player) {
-        if (this.running.compareAndSet(false, true)) {
+        if (!this.playerJoined.compareAndSet(false, true)) {
             LOGGER.error("There should be no more than one player joining Marathon!");
             player.kick(Component.text("An error occurred and you were placed in the wrong game. Please reconnect."));
             return;
         }
 
-        // Start the game when the player joins, not in start, as start is delayed
-        this.reset();
+        player.setRespawnPoint(RESET_POINT.add(0, 1, 0));
     }
 
     @Override
@@ -140,11 +142,11 @@ public final class MarathonGame extends Game {
         this.blocks.addLast(RESET_POINT);
 
         for (Player player : this.getPlayers()) {
-            player.teleport(RESET_POINT.add(0, 1, 0));
+            player.teleport(player.getRespawnPoint());
         }
         this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
 
-        this.onBlockTouch(NEXT_BLOCKS_COUNT, false);
+        this.generateNextBlocks(NEXT_BLOCKS_COUNT, false);
     }
 
     private void startRefreshDisplaysTask() {
@@ -174,7 +176,7 @@ public final class MarathonGame extends Game {
 //        ));
     }
 
-    private void generateNextBlock(boolean inGame) {
+    private void generateNextBlock(boolean shouldAnimate) {
         if (this.blocks.size() > NEXT_BLOCKS_COUNT) {
             Point firstBlockPos = this.blocks.getFirst();
             this.animator.destroyBlockAnimated(this.instance, firstBlockPos, Block.AIR);
@@ -198,26 +200,26 @@ public final class MarathonGame extends Game {
         List<Block> blocks = this.palette.getBlocks();
         Block randomBlock = blocks.get(random.nextInt(blocks.size()));
 
-        if (inGame) {
+        if (shouldAnimate) {
             this.animator.setBlockAnimated(this.instance, nextBlockPos, randomBlock, lastBlockPos);
         } else {
             this.instance.setBlock(nextBlockPos, randomBlock);
         }
     }
 
-    public void onBlockTouch(int blockIndex, boolean inGame) {
-        for (int i = 0; i < blockIndex; i++) {
-            this.generateNextBlock(inGame);
+    public void generateNextBlocks(int blockCount, boolean shouldAnimate) {
+        for (int i = 0; i < blockCount; i++) {
+            this.generateNextBlock(shouldAnimate);
         }
 
-        if (inGame) {
-            this.score += blockIndex;
+        if (shouldAnimate) {
+            this.score += blockCount;
 
             double powerResult = Math.pow(2, this.combo / 45.0);
-            double maxTimeTaken = 1000L * blockIndex / powerResult;
+            double maxTimeTaken = 1000L * blockCount / powerResult;
 
             if (System.currentTimeMillis() - this.lastBlockTimestamp < maxTimeTaken) {
-                this.combo += blockIndex;
+                this.combo += blockCount;
             } else {
                 this.combo = 0;
             }

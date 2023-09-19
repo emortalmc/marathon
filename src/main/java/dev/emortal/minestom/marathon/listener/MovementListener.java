@@ -28,7 +28,7 @@ public final class MovementListener {
 
         if (index <= 0 || index == this.game.getBlocks().size()) return;
 
-        this.game.onBlockTouch(index, true);
+        this.game.generateNextBlocks(index, true);
     }
 
     private void checkPosition(@NotNull Point newPosition) {
