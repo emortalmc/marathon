@@ -10,5 +10,5 @@ spec:
     type: Buffer
     buffer:
       bufferSize: 1
-      minReplicas: 1
+      minReplicas: 3
       maxReplicas: 5
