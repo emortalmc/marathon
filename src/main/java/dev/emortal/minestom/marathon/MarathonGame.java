@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 public final class MarathonGame extends Game {
@@ -58,6 +59,7 @@ public final class MarathonGame extends Game {
     private final @NotNull BlockPalette palette;
 
     private final ArrayDeque<Point> blocks = new ArrayDeque<>(NEXT_BLOCKS_COUNT + 1);
+    private final AtomicBoolean running = new AtomicBoolean(false);
 
     private int score;
     private int combo;
@@ -88,20 +90,24 @@ public final class MarathonGame extends Game {
 
     @Override
     public void start() {
-        if (this.getCreationInfo().playerIds().size() > 1) {
-            LOGGER.error("There should be no more than one player joining Marathon");
-            return;
-        }
-
-        this.reset();
+        // Do nothing - game is started on join
     }
 
     @Override
     public void onJoin(@NotNull Player player) {
+        if (this.running.compareAndSet(false, true)) {
+            LOGGER.error("There should be no more than one player joining Marathon!");
+            player.kick(Component.text("An error occurred and you were placed in the wrong game. Please reconnect."));
+            return;
+        }
+
+        // Start the game when the player joins, not in start, as start is delayed
+        this.reset();
     }
 
     @Override
     public void onLeave(@NotNull Player player) {
+        // Do nothing - game SDK will check if player count is 0 and end the game
     }
 
     @Override
