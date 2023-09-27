@@ -16,6 +16,8 @@ jobs:
     needs: "build"
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "emortalmc/actions/k8s-sync@main"
+      - uses: "emortalmc/actions/argo-sync@main"
         with:
-          manifest-path: "fleet.yaml"
+          deployment-name: "marathon"
+          values-path: "server/values/marathon.yaml"
+          deployments-repo-token: "${{ secrets.DEPLOYMENTS_REPO_TOKEN }}"
