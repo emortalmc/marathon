@@ -127,7 +127,7 @@ public final class MarathonGame extends Game {
         this.combo = 0;
         this.runInvalidated = false;
         this.lastBlockTimestamp = 0;
-        this.startTimestamp = System.currentTimeMillis();
+        this.startTimestamp = -1;
 
         for (Point block : this.blocks) {
             this.animator.destroyBlockAnimated(this.instance, block, Block.AIR);
@@ -147,6 +147,8 @@ public final class MarathonGame extends Game {
         this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
 
         this.generateNextBlocks(NEXT_BLOCKS_COUNT, false);
+
+        refreshDisplays();
     }
 
     private void startRefreshDisplaysTask() {
@@ -157,7 +159,7 @@ public final class MarathonGame extends Game {
         long millisTaken = this.startTimestamp == -1 ? 0 : System.currentTimeMillis() - this.startTimestamp;
         String formattedTime = DATE_FORMAT.format(new Date(millisTaken));
         double secondsTaken = millisTaken / 1000.0;
-        String scorePerSecond = this.score < 2 ? "-.-" : String.valueOf(MathUtils.clamp(Math.floor(this.score / secondsTaken * 10.0) / 10.0, 0.0, 9.9));
+        String scorePerSecond = this.score < 5 ? "-.-" : String.valueOf(MathUtils.clamp(Math.floor(this.score / secondsTaken * 10.0) / 10.0, 0.0, 9.9));
 
         Component message = Component.text()
                 .append(Component.text(this.score, TextColor.fromHexString("#ff00a6"), TextDecoration.BOLD))
@@ -208,7 +210,7 @@ public final class MarathonGame extends Game {
     }
 
     public void generateNextBlocks(int blockCount, boolean shouldAnimate) {
-        if (startTimestamp == -1) {
+        if (startTimestamp == -1 && shouldAnimate) {
             beginTimer();
         }
 
