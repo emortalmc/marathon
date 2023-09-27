@@ -18,6 +18,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.Instance;
@@ -102,6 +103,7 @@ public final class MarathonGame extends Game {
             return;
         }
 
+        player.setGameMode(GameMode.ADVENTURE);
         player.setRespawnPoint(RESET_POINT.add(0, 1, 0));
     }
 
