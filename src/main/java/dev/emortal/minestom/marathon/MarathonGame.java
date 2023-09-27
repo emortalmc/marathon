@@ -86,14 +86,12 @@ public final class MarathonGame extends Game {
 
         MovementListener movementListener = new MovementListener(this);
         this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
+
+        this.reset();
     }
 
     @Override
     public void start() {
-        this.startTimestamp = System.currentTimeMillis();
-        this.blocks.addLast(RESET_POINT);
-        this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
-        this.generateNextBlocks(NEXT_BLOCKS_COUNT, false);
     }
 
     @Override
@@ -208,6 +206,10 @@ public final class MarathonGame extends Game {
     }
 
     public void generateNextBlocks(int blockCount, boolean shouldAnimate) {
+        if (startTimestamp == -1) {
+            beginTimer();
+        }
+
         for (int i = 0; i < blockCount; i++) {
             this.generateNextBlock(shouldAnimate);
         }
@@ -268,6 +270,10 @@ public final class MarathonGame extends Game {
                 return TaskSchedule.tick(10);
             }
         });
+    }
+
+    public void beginTimer() {
+        startTimestamp = System.currentTimeMillis();
     }
 
     public @NotNull Collection<Point> getBlocks() {
