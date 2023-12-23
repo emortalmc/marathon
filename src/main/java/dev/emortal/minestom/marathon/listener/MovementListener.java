@@ -54,6 +54,7 @@ public final class MovementListener {
 
         if (newPosition.blockY() < (minY - 3)) { // too far below
             this.game.reset();
+            this.game.teleportPlayerToStart();
         }
 
         if (this.game.isRunInvalidated()) return;

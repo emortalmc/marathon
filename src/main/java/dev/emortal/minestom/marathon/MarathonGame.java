@@ -1,7 +1,5 @@
 package dev.emortal.minestom.marathon;
 
-import dev.emortal.minestom.gamesdk.config.GameCreationInfo;
-import dev.emortal.minestom.gamesdk.game.Game;
 import dev.emortal.minestom.marathon.animator.BlockAnimator;
 import dev.emortal.minestom.marathon.animator.SuvatAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
@@ -20,6 +18,8 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.Event;
+import net.minestom.server.event.EventNode;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
@@ -41,11 +41,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
-public final class MarathonGame extends Game {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarathonGame.class);
+public final class MarathonGame {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarathonGameRunner.class);
 
     static final @NotNull DimensionType FULLBRIGHT_DIMENSION = DimensionType.builder(NamespaceID.from("fullbright")).ambientLight(1F).build();
 
@@ -55,12 +54,12 @@ public final class MarathonGame extends Game {
     public static final @NotNull Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
 
     private final @NotNull Instance instance;
+    private final @NotNull Player player;
     private final @NotNull Generator generator;
     private final @NotNull BlockAnimator animator;
     private final @NotNull BlockPalette palette;
 
     private final ArrayDeque<Point> blocks = new ArrayDeque<>(NEXT_BLOCKS_COUNT + 1);
-    private final AtomicBoolean playerJoined = new AtomicBoolean(false);
 
     private int score;
     private int combo;
@@ -72,8 +71,8 @@ public final class MarathonGame extends Game {
 
     private @Nullable Task breakingTask;
 
-    public MarathonGame(@NotNull GameCreationInfo creationInfo) {
-        super(creationInfo);
+    MarathonGame(@NotNull Player player, @NotNull EventNode<Event> eventNode) {
+        this.player = player;
 
         this.generator = DefaultGenerator.INSTANCE;
         this.animator = new SuvatAnimator();
@@ -86,34 +85,17 @@ public final class MarathonGame extends Game {
         this.startRefreshDisplaysTask();
 
         MovementListener movementListener = new MovementListener(this);
-        this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
+        eventNode.addListener(PlayerMoveEvent.class, movementListener::onMove);
 
         this.reset();
     }
 
-    @Override
-    public void start() {
-    }
-
-    @Override
-    public void onJoin(@NotNull Player player) {
-        if (!this.playerJoined.compareAndSet(false, true)) {
-            LOGGER.error("There should be no more than one player joining Marathon!");
-            player.kick(Component.text("An error occurred and you were placed in the wrong game. Please reconnect."));
-            return;
-        }
-
+    void onJoin(@NotNull Player player) {
         player.setGameMode(GameMode.ADVENTURE);
         player.setRespawnPoint(RESET_POINT.add(0, 1, 0));
     }
 
-    @Override
-    public void onLeave(@NotNull Player player) {
-        // Do nothing - game SDK will check if player count is 0 and end the game
-    }
-
-    @Override
-    public void cleanUp() {
+    void cleanUp() {
         this.instance.scheduleNextTick(MinecraftServer.getInstanceManager()::unregisterInstance);
     }
 
@@ -141,14 +123,15 @@ public final class MarathonGame extends Game {
         this.blocks.clear();
         this.blocks.addLast(RESET_POINT);
 
-        for (Player player : this.getPlayers()) {
-            player.teleport(player.getRespawnPoint());
-        }
         this.instance.setBlock(RESET_POINT, Block.DIAMOND_BLOCK);
 
         this.generateNextBlocks(NEXT_BLOCKS_COUNT, false);
 
-        refreshDisplays();
+        this.refreshDisplays();
+    }
+
+    public void teleportPlayerToStart() {
+        this.player.teleport(this.player.getRespawnPoint());
     }
 
     private void startRefreshDisplaysTask() {
@@ -169,7 +152,7 @@ public final class MarathonGame extends Game {
                 .append(Component.text(scorePerSecond + "bps", NamedTextColor.GRAY))
                 .build();
 
-        this.sendActionBar(message);
+        this.player.sendActionBar(message);
 
 //        this.player.showTitle(Title.title(
 //                Component.empty(),
@@ -210,8 +193,8 @@ public final class MarathonGame extends Game {
     }
 
     public void generateNextBlocks(int blockCount, boolean shouldAnimate) {
-        if (startTimestamp == -1 && shouldAnimate) {
-            beginTimer();
+        if (this.startTimestamp == -1 && shouldAnimate) {
+            this.beginTimer();
         }
 
         for (int i = 0; i < blockCount; i++) {
@@ -243,7 +226,8 @@ public final class MarathonGame extends Game {
 
     private void playSound(int combo) {
         float pitch = 0.9f + (combo - 1) * 0.05f;
-        this.playSound(Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_BASS, Sound.Source.MASTER, 1f, pitch), Sound.Emitter.self());
+        Sound comboSound = Sound.sound(SoundEvent.BLOCK_NOTE_BLOCK_BASS, Sound.Source.MASTER, 1f, pitch);
+        this.player.playSound(comboSound, Sound.Emitter.self());
     }
 
     private void createBreakingTask() {
@@ -268,7 +252,8 @@ public final class MarathonGame extends Game {
                     MarathonGame.this.createBreakingTask();
                 }
 
-                MarathonGame.this.playSound(Sound.sound(SoundEvent.BLOCK_WOOD_HIT, Sound.Source.MASTER, 0.5f, 1f), Sound.Emitter.self());
+                Sound breakingSound = Sound.sound(SoundEvent.BLOCK_WOOD_HIT, Sound.Source.MASTER, 0.5f, 1f);
+                MarathonGame.this.player.playSound(breakingSound, Sound.Emitter.self());
                 BlockPacketUtils.sendBlockDamage(MarathonGame.this.instance, block, this.destroyStage);
 
                 return TaskSchedule.tick(10);
@@ -277,15 +262,15 @@ public final class MarathonGame extends Game {
     }
 
     public void beginTimer() {
-        startTimestamp = System.currentTimeMillis();
+        this.startTimestamp = System.currentTimeMillis();
+    }
+
+    public @NotNull Instance getInstance() {
+        return this.instance;
     }
 
     public @NotNull Collection<Point> getBlocks() {
         return this.blocks;
-    }
-
-    public @NotNull Instance getSpawningInstance() {
-        return this.instance;
     }
 
     public boolean isRunInvalidated() {

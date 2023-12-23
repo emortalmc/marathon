@@ -13,7 +13,7 @@ public final class Main {
             return GameSdkConfig.builder()
                     .minPlayers(1)
                     .maxGames(50)
-                    .gameCreator(MarathonGame::new)
+                    .gameCreator(MarathonGameRunner::new)
                     .build();
         });
     }
