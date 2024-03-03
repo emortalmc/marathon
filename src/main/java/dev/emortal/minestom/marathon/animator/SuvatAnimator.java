@@ -2,7 +2,7 @@ package dev.emortal.minestom.marathon.animator;
 
 import dev.emortal.minestom.marathon.MarathonGame;
 import dev.emortal.minestom.marathon.util.BetterEntity;
-import net.minestom.server.MinecraftServer;
+import net.minestom.server.ServerFlag;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
@@ -43,7 +43,7 @@ public final class SuvatAnimator implements BlockAnimator {
         Point velocityXZ = displacementXZ.div(time);
 
         Vec combinedVelocity = Vec.fromPoint(velocityXZ.withY(velocityY));
-        lastEntity.setVelocity(combinedVelocity.mul(MinecraftServer.TICK_PER_SECOND));
+        lastEntity.setVelocity(combinedVelocity.mul(ServerFlag.SERVER_TICKS_PER_SECOND));
 
         lastEntity.setInstance(instance, realLastPoint);
 

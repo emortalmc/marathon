@@ -1,6 +1,6 @@
 package dev.emortal.minestom.marathon.util;
 
-import net.minestom.server.MinecraftServer;
+import net.minestom.server.ServerFlag;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
@@ -53,7 +53,7 @@ public final class BetterEntity extends Entity {
                         z * finalDrag
                 ))
                 // Convert from block/tick to block/sec
-                .mul(MinecraftServer.TICK_PER_SECOND)
+                .mul(ServerFlag.SERVER_TICKS_PER_SECOND)
                 // Prevent infinitely decreasing velocity
                 .apply(Vec.Operator.EPSILON);
     }

@@ -2,7 +2,7 @@ package dev.emortal.minestom.marathon.animator;
 
 import dev.emortal.minestom.marathon.MarathonGame;
 import dev.emortal.minestom.marathon.util.BetterEntity;
-import net.minestom.server.MinecraftServer;
+import net.minestom.server.ServerFlag;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
@@ -49,7 +49,7 @@ public final class PathAnimator implements BlockAnimator {
                     finalEntity.remove();
                     instance.setBlock(point, block);
                 })
-                .delay(TaskSchedule.tick((int) (TIME_TO_ANIMATE * MinecraftServer.TICK_PER_SECOND)))
+                .delay(TaskSchedule.tick((int) (TIME_TO_ANIMATE * ServerFlag.SERVER_TICKS_PER_SECOND)))
                 .schedule();
 //        lastEntity.scheduleRemove(Duration.ofMillis((long) (timeToAnimate * 1000)));
     }
