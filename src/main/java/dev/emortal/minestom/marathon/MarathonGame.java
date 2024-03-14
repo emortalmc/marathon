@@ -19,10 +19,13 @@ import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.Event;
+import net.minestom.server.event.EventListener;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.player.PlayerMoveEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.network.ConnectionState;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
@@ -139,6 +142,10 @@ public final class MarathonGame {
     }
 
     private void refreshDisplays() {
+        // the player is added to the game during the configuration state,
+        // this stops action bars from being sent to the player during that time
+        if (this.player.getPlayerConnection().getConnectionState() != ConnectionState.PLAY) return;
+
         long millisTaken = this.startTimestamp == -1 ? 0 : System.currentTimeMillis() - this.startTimestamp;
         String formattedTime = DATE_FORMAT.format(new Date(millisTaken));
         double secondsTaken = millisTaken / 1000.0;
