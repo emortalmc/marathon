@@ -1,37 +1,44 @@
 package dev.emortal.minestom.marathon.listener;
 
 import dev.emortal.minestom.marathon.MarathonGame;
+import dev.emortal.minestom.marathon.MarathonGameRunner;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
 public final class MovementListener {
 
-    private final @NotNull MarathonGame game;
+    private final @NotNull MarathonGameRunner runner;
 
-    public MovementListener(@NotNull MarathonGame game) {
-        this.game = game;
+    public MovementListener(@NotNull MarathonGameRunner runner) {
+        this.runner = runner;
     }
 
     public void onMove(@NotNull PlayerMoveEvent event) {
+        MarathonGame game = this.runner.getGameForPlayer(event.getPlayer());
+        if (game == null) {
+            // Player is probably not in a game yet
+            return;
+        }
+
         Point posUnder = event.getNewPosition().sub(0, 1, 0);
         Point posTwoUnder = event.getNewPosition().sub(0, 2, 0);
 
-        this.checkPosition(event.getNewPosition());
+        this.checkPosition(game, event.getNewPosition());
 
         int index = 0;
-        for (Point block : this.game.getBlocks()) {
+        for (Point block : game.getBlocks()) {
             if (block.sameBlock(posUnder)) break;
             if (block.sameBlock(posTwoUnder)) break;
             index++;
         }
 
-        if (index <= 0 || index == this.game.getBlocks().size()) return;
+        if (index <= 0 || index == game.getBlocks().size()) return;
 
-        this.game.generateNextBlocks(index, true);
+        game.generateNextBlocks(index, true);
     }
 
-    private void checkPosition(@NotNull Point newPosition) {
+    private void checkPosition(@NotNull MarathonGame game, @NotNull Point newPosition) {
         int maxX = 0;
         int minX = 0;
 
@@ -41,7 +48,7 @@ public final class MovementListener {
         int maxZ = Integer.MIN_VALUE;
         int minZ = Integer.MAX_VALUE;
 
-        for (Point block : this.game.getBlocks()) {
+        for (Point block : game.getBlocks()) {
             if (block.blockX() < minX) minX = block.blockX();
             if (block.blockX() > maxX) maxX = block.blockX();
 
@@ -53,11 +60,11 @@ public final class MovementListener {
         }
 
         if (newPosition.blockY() < (minY - 3)) { // too far below
-            this.game.reset();
-            this.game.teleportPlayerToStart();
+            game.reset();
+            game.teleportPlayerToStart();
         }
 
-        if (this.game.isRunInvalidated()) return;
+        if (game.isRunInvalidated()) return;
 
         if (
                 newPosition.blockY() > (maxY + 3.5) || // too far up
@@ -65,7 +72,7 @@ public final class MovementListener {
                         newPosition.blockX() > maxX + 6 || // too far left and right
                         newPosition.blockX() < minX - 6
         ) {
-            this.game.setRunInvalidated(true);
+            game.setRunInvalidated(true);
         }
     }
 

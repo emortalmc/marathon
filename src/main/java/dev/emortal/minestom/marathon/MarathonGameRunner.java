@@ -2,9 +2,12 @@ package dev.emortal.minestom.marathon;
 
 import dev.emortal.minestom.gamesdk.config.GameCreationInfo;
 import dev.emortal.minestom.gamesdk.game.Game;
+import dev.emortal.minestom.marathon.listener.MovementListener;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.Instance;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +20,9 @@ public final class MarathonGameRunner extends Game {
 
     public MarathonGameRunner(@NotNull GameCreationInfo creationInfo) {
         super(creationInfo);
+
+        MovementListener movementListener = new MovementListener(this);
+        this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
     }
 
     @Override
@@ -25,7 +31,7 @@ public final class MarathonGameRunner extends Game {
 
     @Override
     public void onJoin(@NotNull Player player) {
-        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(player, this.getEventNode()));
+        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(player));
         game.onJoin(player);
     }
 
@@ -48,5 +54,9 @@ public final class MarathonGameRunner extends Game {
             throw new IllegalStateException("No game found for player " + player.getUsername() + " when instance requested!");
         }
         return game.getInstance();
+    }
+
+    public @Nullable MarathonGame getGameForPlayer(@NotNull Player player) {
+        return this.games.get(player.getUuid());
     }
 }

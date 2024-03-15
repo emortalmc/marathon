@@ -4,7 +4,6 @@ import dev.emortal.minestom.marathon.animator.BlockAnimator;
 import dev.emortal.minestom.marathon.animator.SuvatAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
 import dev.emortal.minestom.marathon.generator.Generator;
-import dev.emortal.minestom.marathon.listener.MovementListener;
 import dev.emortal.minestom.marathon.palette.BlockPalette;
 import dev.emortal.minestom.marathon.util.BlockPacketUtils;
 import net.kyori.adventure.sound.Sound;
@@ -18,11 +17,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.Event;
-import net.minestom.server.event.EventListener;
-import net.minestom.server.event.EventNode;
-import net.minestom.server.event.player.PlayerMoveEvent;
-import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.ConnectionState;
@@ -35,8 +29,6 @@ import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
@@ -47,7 +39,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
 public final class MarathonGame {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarathonGameRunner.class);
 
     static final @NotNull DimensionType FULLBRIGHT_DIMENSION = DimensionType.builder(NamespaceID.from("fullbright")).ambientLight(1F).build();
 
@@ -74,7 +65,7 @@ public final class MarathonGame {
 
     private @Nullable Task breakingTask;
 
-    MarathonGame(@NotNull Player player, @NotNull EventNode<Event> eventNode) {
+    MarathonGame(@NotNull Player player) {
         this.player = player;
 
         this.generator = DefaultGenerator.INSTANCE;
@@ -86,10 +77,6 @@ public final class MarathonGame {
         this.instance.setTimeUpdate(null);
 
         this.startRefreshDisplaysTask();
-
-        MovementListener movementListener = new MovementListener(this);
-        eventNode.addListener(PlayerMoveEvent.class, movementListener::onMove);
-
         this.reset();
     }
 
