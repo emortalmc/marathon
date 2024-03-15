@@ -6,13 +6,14 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public final class MarathonGameRunner extends Game {
 
-    private final Map<UUID, MarathonGame> games = new HashMap<>();
+    private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
 
     public MarathonGameRunner(@NotNull GameCreationInfo creationInfo) {
         super(creationInfo);
