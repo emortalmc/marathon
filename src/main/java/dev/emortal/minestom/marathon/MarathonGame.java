@@ -17,6 +17,9 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.instance.InstanceChunkUnloadEvent;
+import net.minestom.server.event.player.PlayerChunkUnloadEvent;
+import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.ConnectionState;
@@ -75,6 +78,12 @@ public final class MarathonGame {
         this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(FULLBRIGHT_DIMENSION);
         this.instance.setTimeRate(0);
         this.instance.setTimeUpdate(null);
+        this.instance.eventNode().addListener(PlayerChunkUnloadEvent.class, event -> {
+            Chunk chunk = this.instance.getChunk(event.getChunkX(), event.getChunkZ());
+            if (chunk == null) return;
+
+            if (chunk.getViewers().isEmpty()) this.instance.unloadChunk(chunk);
+        });
 
         this.startRefreshDisplaysTask();
         this.reset();
