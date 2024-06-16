@@ -23,6 +23,7 @@ import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.network.ConnectionState;
+import net.minestom.server.registry.DynamicRegistry;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
@@ -42,8 +43,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
 public final class MarathonGame {
-
-    static final @NotNull DimensionType FULLBRIGHT_DIMENSION = DimensionType.builder(NamespaceID.from("fullbright")).ambientLight(1F).build();
 
     private static final int NEXT_BLOCKS_COUNT = 7;
     private static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
@@ -68,16 +67,16 @@ public final class MarathonGame {
 
     private @Nullable Task breakingTask;
 
-    MarathonGame(@NotNull Player player) {
+    MarathonGame(@NotNull Player player, @NotNull DynamicRegistry.Key<DimensionType> dimension) {
         this.player = player;
 
         this.generator = DefaultGenerator.INSTANCE;
         this.animator = new SuvatAnimator();
         this.palette = BlockPalette.OVERWORLD;
 
-        this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(FULLBRIGHT_DIMENSION);
+        this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimension);
         this.instance.setTimeRate(0);
-        this.instance.setTimeUpdate(null);
+        this.instance.setTimeSynchronizationTicks(0);
         this.instance.eventNode().addListener(PlayerChunkUnloadEvent.class, event -> {
             Chunk chunk = this.instance.getChunk(event.getChunkX(), event.getChunkZ());
             if (chunk == null) return;

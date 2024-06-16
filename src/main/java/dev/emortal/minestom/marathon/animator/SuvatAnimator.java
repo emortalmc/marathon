@@ -1,10 +1,11 @@
 package dev.emortal.minestom.marathon.animator;
 
 import dev.emortal.minestom.marathon.MarathonGame;
-import dev.emortal.minestom.marathon.util.BetterEntity;
 import net.minestom.server.ServerFlag;
+import net.minestom.server.collision.Aerodynamics;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Vec;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.metadata.other.FallingBlockMeta;
 import net.minestom.server.instance.Instance;
@@ -26,20 +27,20 @@ public final class SuvatAnimator implements BlockAnimator {
         }
         Point realLastPoint = this.lastValidBlock.add(0.5, 0, 0.5);
 
-        BetterEntity lastEntity = new BetterEntity(EntityType.FALLING_BLOCK);
+        //   comment from luis:
+        // i have spent hours trying to replicate the old physics behaviour of this class.
+        // i cannot, for the life of me, figure out why it isn't the same anymore. the same
+        // gravity values are being put in, and the same velocities are being calculated.
+        // i have now decided that this is good enough, and that someone else should fix it.
+        Entity lastEntity = new Entity(EntityType.FALLING_BLOCK);
         lastEntity.setTag(MarathonGame.MARATHON_ENTITY_TAG, true);
-        lastEntity.setDrag(false);
-        lastEntity.setGravityDrag(false);
-        lastEntity.setPhysics(false);
-        lastEntity.setGravity(0.0, -GRAVITY);
-
-        FallingBlockMeta meta = (FallingBlockMeta) lastEntity.getEntityMeta();
-        meta.setBlock(block);
+        lastEntity.setAerodynamics(new Aerodynamics(GRAVITY, 0, 0));
+        lastEntity.editEntityMeta(FallingBlockMeta.class, meta -> meta.setBlock(block));
 
         double displacementY = point.y() - realLastPoint.y();
         Point displacementXZ = point.sub(realLastPoint);
         double time = Math.sqrt(-2 * HEIGHT / GRAVITY) + Math.sqrt(2 * (displacementY - HEIGHT) / GRAVITY);
-        double velocityY = Math.sqrt(-2 * GRAVITY * HEIGHT);
+        double velocityY = Math.sqrt(-GRAVITY * HEIGHT);
         Point velocityXZ = displacementXZ.div(time);
 
         Vec combinedVelocity = Vec.fromPoint(velocityXZ.withY(velocityY));

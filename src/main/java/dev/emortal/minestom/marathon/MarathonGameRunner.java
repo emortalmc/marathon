@@ -6,6 +6,8 @@ import dev.emortal.minestom.marathon.listener.MovementListener;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.registry.DynamicRegistry;
+import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,9 +19,11 @@ import java.util.UUID;
 public final class MarathonGameRunner extends Game {
 
     private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
+    private final DynamicRegistry.Key<DimensionType> dimension;
 
-    public MarathonGameRunner(@NotNull GameCreationInfo creationInfo) {
+    public MarathonGameRunner(@NotNull GameCreationInfo creationInfo, @NotNull DynamicRegistry.Key<DimensionType> dimension) {
         super(creationInfo);
+        this.dimension = dimension;
 
         MovementListener movementListener = new MovementListener(this);
         this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
@@ -31,7 +35,7 @@ public final class MarathonGameRunner extends Game {
 
     @Override
     public void onJoin(@NotNull Player player) {
-        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(player));
+        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(player, this.dimension));
         game.onJoin(player);
     }
 

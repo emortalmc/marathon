@@ -1,7 +1,6 @@
 package dev.emortal.minestom.marathon.animator;
 
 import dev.emortal.minestom.marathon.MarathonGame;
-import dev.emortal.minestom.marathon.util.BetterEntity;
 import net.minestom.server.ServerFlag;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -18,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 public final class PathAnimator implements BlockAnimator {
     private static final double TIME_TO_ANIMATE = 0.6;
 
-    private @Nullable BetterEntity lastEntity = null;
+    private @Nullable Entity lastEntity = null;
 
     @Override
     public void setBlockAnimated(@NotNull Instance instance, @NotNull Point point, @NotNull Block block, @NotNull Point lastPoint) {
@@ -27,10 +26,8 @@ public final class PathAnimator implements BlockAnimator {
             realLastPoint = this.lastEntity.getPosition();
         }
 
-        this.lastEntity = new BetterEntity(EntityType.FALLING_BLOCK);
+        this.lastEntity = new Entity(EntityType.FALLING_BLOCK);
         this.lastEntity.setTag(MarathonGame.MARATHON_ENTITY_TAG, true);
-        this.lastEntity.setPhysics(false);
-        this.lastEntity.setDrag(false);
         this.lastEntity.setNoGravity(true);
 
         FallingBlockMeta meta = (FallingBlockMeta) this.lastEntity.getEntityMeta();
