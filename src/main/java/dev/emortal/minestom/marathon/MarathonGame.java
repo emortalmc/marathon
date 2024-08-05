@@ -1,7 +1,7 @@
 package dev.emortal.minestom.marathon;
 
 import dev.emortal.minestom.marathon.animator.BlockAnimator;
-import dev.emortal.minestom.marathon.animator.SuvatAnimator;
+import dev.emortal.minestom.marathon.animator.PathAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
 import dev.emortal.minestom.marathon.generator.Generator;
 import dev.emortal.minestom.marathon.palette.BlockPalette;
@@ -17,7 +17,6 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.instance.InstanceChunkUnloadEvent;
 import net.minestom.server.event.player.PlayerChunkUnloadEvent;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
@@ -29,7 +28,6 @@ import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
 import net.minestom.server.utils.MathUtils;
-import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -71,7 +69,7 @@ public final class MarathonGame {
         this.player = player;
 
         this.generator = DefaultGenerator.INSTANCE;
-        this.animator = new SuvatAnimator();
+        this.animator = new PathAnimator();
         this.palette = BlockPalette.OVERWORLD;
 
         this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimension);

@@ -1,13 +1,13 @@
 package dev.emortal.minestom.marathon.animator;
 
 import dev.emortal.minestom.marathon.MarathonGame;
-import net.minestom.server.ServerFlag;
+import dev.emortal.minestom.marathon.util.NoPhysicsEntity;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.entity.metadata.other.FallingBlockMeta;
+import net.minestom.server.entity.metadata.display.BlockDisplayMeta;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.timer.TaskSchedule;
@@ -15,8 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class PathAnimator implements BlockAnimator {
-    private static final double TIME_TO_ANIMATE = 0.6;
-
     private @Nullable Entity lastEntity = null;
 
     @Override
@@ -26,29 +24,28 @@ public final class PathAnimator implements BlockAnimator {
             realLastPoint = this.lastEntity.getPosition();
         }
 
-        this.lastEntity = new Entity(EntityType.FALLING_BLOCK);
+        this.lastEntity = new NoPhysicsEntity(EntityType.BLOCK_DISPLAY);
         this.lastEntity.setTag(MarathonGame.MARATHON_ENTITY_TAG, true);
         this.lastEntity.setNoGravity(true);
-
-        FallingBlockMeta meta = (FallingBlockMeta) this.lastEntity.getEntityMeta();
-        meta.setBlock(block);
-
-        Vec newVelocity = Vec.fromPoint(point.sub(realLastPoint))
-                .normalize()
-                .mul(point.distance(realLastPoint) / TIME_TO_ANIMATE);
-        this.lastEntity.setVelocity(newVelocity);
-
-        this.lastEntity.setInstance(instance, realLastPoint);
-
+        this.lastEntity.editEntityMeta(BlockDisplayMeta.class, meta -> {
+            meta.setBlockState(block);
+            meta.setTranslation(new Vec(-0.5, 0.0, -0.5));
+            meta.setPosRotInterpolationDuration(3);
+        });
         Entity finalEntity = this.lastEntity;
+        this.lastEntity.setInstance(instance, realLastPoint).thenRun(() -> {
+            finalEntity.scheduler().buildTask(() -> {
+                finalEntity.teleport(Pos.fromPoint(point));
+            }).repeat(TaskSchedule.tick(1)).schedule();
+        });
+
         this.lastEntity.scheduler()
                 .buildTask(() -> {
-                    finalEntity.remove();
                     instance.setBlock(point, block);
+                    finalEntity.scheduleNextTick(Entity::remove);
                 })
-                .delay(TaskSchedule.tick((int) (TIME_TO_ANIMATE * ServerFlag.SERVER_TICKS_PER_SECOND)))
+                .delay(TaskSchedule.tick(13))
                 .schedule();
-//        lastEntity.scheduleRemove(Duration.ofMillis((long) (timeToAnimate * 1000)));
     }
 
     @Override
