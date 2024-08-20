@@ -16,7 +16,6 @@ public final class Main {
 
             return GameSdkConfig.builder()
                     .minPlayers(1)
-                    .maxGames(50)
                     .gameCreator(info -> new MarathonGameRunner(info, dimension))
                     .build();
         });
