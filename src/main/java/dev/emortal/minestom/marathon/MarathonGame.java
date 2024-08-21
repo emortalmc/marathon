@@ -4,7 +4,8 @@ import dev.emortal.minestom.marathon.animator.BlockAnimator;
 import dev.emortal.minestom.marathon.animator.PathAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
 import dev.emortal.minestom.marathon.generator.Generator;
-import dev.emortal.minestom.marathon.palette.BlockPalette;
+import dev.emortal.minestom.marathon.options.BlockPalette;
+import dev.emortal.minestom.marathon.options.Time;
 import dev.emortal.minestom.marathon.util.BlockPacketUtils;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -17,10 +18,16 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.player.PlayerChunkUnloadEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.item.ItemComponent;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 import net.minestom.server.network.ConnectionState;
 import net.minestom.server.registry.DynamicRegistry;
 import net.minestom.server.sound.SoundEvent;
@@ -41,6 +48,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
 public final class MarathonGame {
+    public static final int TIME_SLOT = 20;
+    public static final int PALETTE_SLOT = 24;
 
     private static final int NEXT_BLOCKS_COUNT = 7;
     private static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
@@ -51,7 +60,8 @@ public final class MarathonGame {
     private final @NotNull Player player;
     private final @NotNull Generator generator;
     private final @NotNull BlockAnimator animator;
-    private final @NotNull BlockPalette palette;
+    private @NotNull BlockPalette palette;
+    private @NotNull Time time;
 
     private final ArrayDeque<Point> blocks = new ArrayDeque<>(NEXT_BLOCKS_COUNT + 1);
 
@@ -62,18 +72,20 @@ public final class MarathonGame {
     private boolean runInvalidated;
     private long lastBlockTimestamp = 0;
     private long startTimestamp = -1;
+    private int index;
 
     private @Nullable Task breakingTask;
 
     MarathonGame(@NotNull Player player, @NotNull DynamicRegistry.Key<DimensionType> dimension) {
         this.player = player;
-
         this.generator = DefaultGenerator.INSTANCE;
         this.animator = new PathAnimator();
         this.palette = BlockPalette.OVERWORLD;
+        this.time = Time.MIDNIGHT;
 
         this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimension);
         this.instance.setTimeRate(0);
+        this.instance.setTime(this.time.getTime());
         this.instance.setTimeSynchronizationTicks(0);
         this.instance.eventNode().addListener(PlayerChunkUnloadEvent.class, event -> {
             Chunk chunk = this.instance.getChunk(event.getChunkX(), event.getChunkZ());
@@ -89,10 +101,44 @@ public final class MarathonGame {
     void onJoin(@NotNull Player player) {
         player.setGameMode(GameMode.ADVENTURE);
         player.setRespawnPoint(RESET_POINT.add(0, 1, 0));
+        player.eventNode().addListener(PlayerSpawnEvent.class, event -> this.refreshInventory());
+
+        player.eventNode().addListener(InventoryPreClickEvent.class, event -> {
+            event.setCancelled(true);
+
+            if (event.getClickType() != ClickType.LEFT_CLICK) {
+                return;
+            }
+
+            if (event.getSlot() == MarathonGame.TIME_SLOT) {
+                this.time = this.time.next();
+                event.getInstance().setTime(this.time.getTime());
+                this.playClickSound();
+                this.refreshInventory();
+            } else if (event.getSlot() == MarathonGame.PALETTE_SLOT) {
+                this.palette = this.palette.next();
+                this.playClickSound();
+                this.refreshInventory();
+            }
+        });
     }
 
     void cleanUp() {
         this.instance.scheduleNextTick(MinecraftServer.getInstanceManager()::unregisterInstance);
+    }
+
+    void refreshInventory() {
+        this.player.getInventory().setItemStack(TIME_SLOT, ItemStack.of(Material.CLOCK)
+                .with(ItemComponent.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
+                .with(ItemComponent.LORE, List.of(
+                        Component.text(this.time.getName(), NamedTextColor.GRAY)
+                                .decoration(TextDecoration.ITALIC, false))));
+
+        this.player.getInventory().setItemStack(PALETTE_SLOT, ItemStack.of(this.palette.getIcon())
+                .with(ItemComponent.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
+                .with(ItemComponent.LORE, List.of(
+                        Component.text(this.palette.getName(), NamedTextColor.GRAY)
+                                .decoration(TextDecoration.ITALIC, false))));
     }
 
     public void reset() {
@@ -183,13 +229,21 @@ public final class MarathonGame {
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
         List<Block> blocks = this.palette.getBlocks();
-        Block randomBlock = blocks.get(random.nextInt(blocks.size()));
+        Block randomBlock;
+
+        if (this.palette.isSequential()) {
+            randomBlock = blocks.get(index % blocks.size());
+        } else {
+            randomBlock = blocks.get(random.nextInt(blocks.size()));
+        }
 
         if (shouldAnimate) {
             this.animator.setBlockAnimated(this.instance, nextBlockPos, randomBlock, lastBlockPos);
         } else {
             this.instance.setBlock(nextBlockPos, randomBlock);
         }
+
+        this.index++;
     }
 
     public void generateNextBlocks(int blockCount, boolean shouldAnimate) {
@@ -279,5 +333,13 @@ public final class MarathonGame {
 
     public void setRunInvalidated(boolean runInvalidated) {
         this.runInvalidated = runInvalidated;
+    }
+
+    private void playClickSound() {
+        this.player.playSound(Sound.sound(
+                SoundEvent.UI_BUTTON_CLICK,
+                Sound.Source.MASTER,
+                1.0F,
+                1.0F));
     }
 }

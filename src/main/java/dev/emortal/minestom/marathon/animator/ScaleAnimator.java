@@ -28,15 +28,13 @@ public final class ScaleAnimator implements BlockAnimator {
             meta.setTransformationInterpolationDuration(effectDuration);
         });
 
-        entity.setInstance(instance, point).thenRun(() -> {
-            entity.scheduler().buildTask(() -> {
-                entity.editEntityMeta(BlockDisplayMeta.class, meta -> {
-                    meta.setBlockState(block);
-                    meta.setTranslation(new Vec(-0.5, 0.0, -0.5));
-                    meta.setScale(new Vec(1));
-                });
-            }).delay(TaskSchedule.tick(2)).schedule();
-        });
+        entity.setInstance(instance, point).thenRun(() -> entity.scheduler().buildTask(() -> {
+            entity.editEntityMeta(BlockDisplayMeta.class, meta -> {
+                meta.setBlockState(block);
+                meta.setTranslation(new Vec(-0.5, 0.0, -0.5));
+                meta.setScale(new Vec(1));
+            });
+        }).delay(TaskSchedule.tick(2)).schedule());
 
         entity.scheduler()
                 .buildTask(() -> {
