@@ -2,8 +2,6 @@ package dev.emortal.minestom.marathon;
 
 import dev.emortal.minestom.marathon.animator.BlockAnimator;
 import dev.emortal.minestom.marathon.animator.PathAnimator;
-import dev.emortal.minestom.marathon.animator.ScaleAnimator;
-import dev.emortal.minestom.marathon.animator.SuvatAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
 import dev.emortal.minestom.marathon.generator.Generator;
 import dev.emortal.minestom.marathon.options.BlockPalette;
