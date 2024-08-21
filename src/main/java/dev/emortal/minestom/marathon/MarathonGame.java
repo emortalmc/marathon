@@ -151,6 +151,7 @@ public final class MarathonGame {
 
         this.score = 0;
         this.combo = 0;
+        this.index = 0;
         this.runInvalidated = false;
         this.lastBlockTimestamp = 0;
         this.startTimestamp = -1;
