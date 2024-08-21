@@ -3,10 +3,8 @@ package dev.emortal.minestom.marathon.options;
 import org.jetbrains.annotations.NotNull;
 
 public enum Time {
-    DAWN(0, "Dawn"),
     DAY(1000, "Day"),
     NOON(6000, "Noon"),
-    DUSK(12000, "Dusk"),
     NIGHT(13000, "Night"),
     MIDNIGHT(18000, "Midnight");
 
