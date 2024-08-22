@@ -4,7 +4,9 @@ import dev.emortal.minestom.gamesdk.config.GameCreationInfo;
 import dev.emortal.minestom.gamesdk.game.Game;
 import dev.emortal.minestom.marathon.listener.MovementListener;
 import net.minestom.server.entity.Player;
+import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.player.PlayerMoveEvent;
+import net.minestom.server.event.player.PlayerSwapItemEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.registry.DynamicRegistry;
 import net.minestom.server.world.DimensionType;
@@ -17,7 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class MarathonGameRunner extends Game {
-
     private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
     private final DynamicRegistry.Key<DimensionType> dimension;
 
@@ -26,7 +27,11 @@ public final class MarathonGameRunner extends Game {
         this.dimension = dimension;
 
         MovementListener movementListener = new MovementListener(this);
-        this.getEventNode().addListener(PlayerMoveEvent.class, movementListener::onMove);
+
+        this.getEventNode()
+                .addListener(PlayerMoveEvent.class, movementListener::onMove)
+                .addListener(PlayerSwapItemEvent.class, event -> event.setCancelled(true))
+                .addListener(ItemDropEvent.class, event -> event.setCancelled(true));
     }
 
     @Override

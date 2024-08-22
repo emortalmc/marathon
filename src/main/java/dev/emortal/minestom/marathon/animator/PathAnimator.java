@@ -33,11 +33,12 @@ public final class PathAnimator implements BlockAnimator {
             meta.setPosRotInterpolationDuration(3);
         });
         Entity finalEntity = this.lastEntity;
-        this.lastEntity.setInstance(instance, realLastPoint).thenRun(() -> {
-            finalEntity.scheduler().buildTask(() -> {
-                finalEntity.teleport(Pos.fromPoint(point));
-            }).repeat(TaskSchedule.tick(1)).schedule();
-        });
+
+        this.lastEntity.setInstance(instance, realLastPoint).thenRun(() ->
+                finalEntity.scheduler().buildTask(() ->
+                        finalEntity.teleport(Pos.fromPoint(point)))
+                        .repeat(TaskSchedule.tick(1))
+                        .schedule());
 
         this.lastEntity.scheduler()
                 .buildTask(() -> {
