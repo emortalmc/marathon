@@ -35,10 +35,10 @@ public final class PathAnimator implements BlockAnimator {
         Entity finalEntity = this.lastEntity;
 
         this.lastEntity.setInstance(instance, realLastPoint).thenRun(() ->
-                finalEntity.scheduler().buildTask(() ->
-                        finalEntity.teleport(Pos.fromPoint(point)))
-                        .repeat(TaskSchedule.tick(1))
-                        .schedule());
+                finalEntity.scheduler().buildTask(() -> {
+                    if (finalEntity.isRemoved()) return;
+                    finalEntity.teleport(Pos.fromPoint(point));
+                }).repeat(TaskSchedule.tick(1)).schedule());
 
         this.lastEntity.scheduler()
                 .buildTask(() -> {
