@@ -1,5 +1,5 @@
 plugins {
-    java
+    kotlin("jvm") version "2.0.20"
     id("com.gradleup.shadow") version "8.3.0"
 }
 
@@ -20,12 +20,11 @@ dependencies {
     implementation("dev.emortal.minestom:game-sdk:884345c")
 
     implementation("net.kyori:adventure-text-minimessage:4.17.0")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
+kotlin {
+    jvmToolchain(21)
 }
 
 tasks {
