@@ -59,17 +59,17 @@ public enum BlockPalette {
 
     private final Material icon;
     private final Block starterBlock;
-    private final String name;
+    private final String friendlyName;
     private final @NotNull List<Block> blocks;
 
     BlockPalette(
             @NotNull Material icon,
             @NotNull Block starterBlock,
-            @NotNull String name,
+            @NotNull String friendlyName,
             @NotNull Block... blocks) {
         this.icon = icon;
         this.starterBlock = starterBlock;
-        this.name = name;
+        this.friendlyName = friendlyName;
         this.blocks = List.of(blocks);
     }
 
@@ -83,8 +83,8 @@ public enum BlockPalette {
         return this.icon;
     }
 
-    public @NotNull String getName() {
-        return this.name;
+    public @NotNull String getFriendlyName() {
+        return this.friendlyName;
     }
 
     public @NotNull Block getStarterBlock() {

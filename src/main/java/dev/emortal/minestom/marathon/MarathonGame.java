@@ -1,5 +1,12 @@
 package dev.emortal.minestom.marathon;
 
+import com.google.protobuf.Any;
+import com.google.protobuf.util.FieldMaskUtil;
+import dev.emortal.api.message.gamedata.UpdateGamePlayerDataMessage;
+import dev.emortal.api.model.gamedata.GameDataGameMode;
+import dev.emortal.api.model.gamedata.V1MarathonData;
+import dev.emortal.api.utils.kafka.FriendlyKafkaProducer;
+import dev.emortal.minestom.core.module.messaging.MessagingModule;
 import dev.emortal.minestom.marathon.animator.BlockAnimator;
 import dev.emortal.minestom.marathon.animator.PathAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
@@ -44,6 +51,7 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
@@ -57,6 +65,7 @@ public final class MarathonGame {
     public static final @NotNull Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
 
     private final @NotNull Instance instance;
+    private final @NotNull FriendlyKafkaProducer producer;
     private final @NotNull Player player;
     private final @NotNull Generator generator;
     private final @NotNull BlockAnimator animator;
@@ -67,7 +76,7 @@ public final class MarathonGame {
 
     private int score;
     private int combo;
-//    private int targetX;
+    //    private int targetX;
     private int targetY;
     private boolean runInvalidated;
     private long lastBlockTimestamp = 0;
@@ -76,12 +85,10 @@ public final class MarathonGame {
 
     private @Nullable Task breakingTask;
 
-    MarathonGame(@NotNull Player player, @NotNull DynamicRegistry.Key<DimensionType> dimension) {
-        this.player = player;
-        this.generator = DefaultGenerator.INSTANCE;
-        this.animator = new PathAnimator();
-        this.palette = BlockPalette.OVERWORLD;
-        this.time = Time.MIDNIGHT;
+    MarathonGame(@NotNull DynamicRegistry.Key<DimensionType> dimension, @NotNull FriendlyKafkaProducer producer,
+                 @NotNull Player player, V1MarathonData playerData) {
+        this.time = Time.valueOf(playerData.getTime());
+        this.palette = BlockPalette.valueOf(playerData.getBlockPalette());
 
         this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimension);
         this.instance.setTimeRate(0);
@@ -93,6 +100,13 @@ public final class MarathonGame {
 
             if (chunk.getViewers().isEmpty()) this.instance.unloadChunk(chunk);
         });
+
+        this.producer = producer;
+        this.player = player;
+        this.generator = DefaultGenerator.INSTANCE;
+        this.animator = new PathAnimator();
+        this.palette = BlockPalette.valueOf(playerData.getBlockPalette());
+        this.time = Time.valueOf(playerData.getTime());
 
         this.startRefreshDisplaysTask();
         this.reset();
@@ -115,12 +129,28 @@ public final class MarathonGame {
                 event.getInstance().setTime(this.time.getTime());
                 this.playClickSound();
                 this.refreshInventory();
+                this.produceDataUpdate();
             } else if (event.getSlot() == MarathonGame.PALETTE_SLOT) {
                 this.palette = this.palette.next();
                 this.playClickSound();
                 this.refreshInventory();
+                this.produceDataUpdate();
             }
         });
+    }
+
+    private void produceDataUpdate() {
+        this.producer.produceAndForget(UpdateGamePlayerDataMessage.newBuilder()
+                .setGameMode(GameDataGameMode.MARATHON)
+                .setPlayerId(this.player.getUuid().toString())
+                .setData(Any.pack(
+                        V1MarathonData.newBuilder()
+                                .setBlockPalette(this.palette.name())
+                                .setTime(this.time.name())
+                                .build()
+                ))
+                .setDataMask(FieldMaskUtil.fromStringList(Set.of("block_palette", "time")))
+                .build());
     }
 
     void cleanUp() {
@@ -131,13 +161,13 @@ public final class MarathonGame {
         this.player.getInventory().setItemStack(TIME_SLOT, ItemStack.of(Material.CLOCK)
                 .with(ItemComponent.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
                 .with(ItemComponent.LORE, List.of(
-                        Component.text(this.time.getName(), NamedTextColor.GRAY)
+                        Component.text(this.time.getFriendlyName(), NamedTextColor.GRAY)
                                 .decoration(TextDecoration.ITALIC, false))));
 
         this.player.getInventory().setItemStack(PALETTE_SLOT, ItemStack.of(this.palette.getIcon())
                 .with(ItemComponent.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
                 .with(ItemComponent.LORE, List.of(
-                        Component.text(this.palette.getName(), NamedTextColor.GRAY)
+                        Component.text(this.palette.getFriendlyName(), NamedTextColor.GRAY)
                                 .decoration(TextDecoration.ITALIC, false))));
     }
 

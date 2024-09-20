@@ -1,5 +1,8 @@
 package dev.emortal.minestom.marathon;
 
+import dev.emortal.api.model.gamedata.V1MarathonData;
+import dev.emortal.api.utils.kafka.FriendlyKafkaProducer;
+import dev.emortal.minestom.core.module.messaging.MessagingModule;
 import dev.emortal.minestom.gamesdk.config.GameCreationInfo;
 import dev.emortal.minestom.gamesdk.game.Game;
 import dev.emortal.minestom.marathon.listener.MovementListener;
@@ -20,11 +23,16 @@ import java.util.UUID;
 
 public final class MarathonGameRunner extends Game {
     private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
+    private final Map<UUID, V1MarathonData> playerData;
     private final DynamicRegistry.Key<DimensionType> dimension;
+    private final FriendlyKafkaProducer kafkaProducer;
 
-    public MarathonGameRunner(@NotNull GameCreationInfo creationInfo, @NotNull DynamicRegistry.Key<DimensionType> dimension) {
+    public MarathonGameRunner(@NotNull GameCreationInfo creationInfo, @NotNull MessagingModule messaging,
+                              @NotNull DynamicRegistry.Key<DimensionType> dimension, @NotNull Map<UUID, V1MarathonData> playerData) {
         super(creationInfo);
+        this.playerData = playerData;
         this.dimension = dimension;
+        this.kafkaProducer = messaging.getKafkaProducer();
 
         MovementListener movementListener = new MovementListener(this);
 
@@ -40,7 +48,8 @@ public final class MarathonGameRunner extends Game {
 
     @Override
     public void onJoin(@NotNull Player player) {
-        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(player, this.dimension));
+        V1MarathonData data = this.playerData.get(player.getUuid());
+        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(this.dimension, this.kafkaProducer, player, data));
         game.onJoin(player);
     }
 

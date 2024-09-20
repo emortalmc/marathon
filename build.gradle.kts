@@ -17,7 +17,10 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.emortal.minestom:game-sdk:884345c")
+    implementation("dev.emortal.minestom:game-sdk:805d9aa") {
+        exclude(group = "dev.emortal.api", module = "common-proto-sdk")
+    }
+    implementation("dev.emortal.api:common-proto-sdk:8d931ec")
 
     implementation("net.kyori:adventure-text-minimessage:4.17.0")
 }

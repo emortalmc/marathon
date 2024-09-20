@@ -9,11 +9,11 @@ public enum Time {
     MIDNIGHT(18000, "Midnight");
 
     private final long time;
-    private final String name;
+    private final String friendlyName;
 
-    Time(long time, @NotNull String name) {
+    Time(long time, @NotNull String friendlyName) {
         this.time = time;
-        this.name = name;
+        this.friendlyName = friendlyName;
     }
 
     public Time next() {
@@ -26,7 +26,7 @@ public enum Time {
         return this.time;
     }
 
-    public @NotNull String getName() {
-        return this.name;
+    public @NotNull String getFriendlyName() {
+        return this.friendlyName;
     }
 }
