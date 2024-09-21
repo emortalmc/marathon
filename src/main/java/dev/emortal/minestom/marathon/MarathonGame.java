@@ -14,6 +14,7 @@ import dev.emortal.minestom.marathon.generator.Generator;
 import dev.emortal.minestom.marathon.options.BlockPalette;
 import dev.emortal.minestom.marathon.options.Time;
 import dev.emortal.minestom.marathon.util.BlockPacketUtils;
+import dev.emortal.minestom.marathon.util.EnumLore;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -158,17 +159,16 @@ public final class MarathonGame {
     }
 
     void refreshInventory() {
-        this.player.getInventory().setItemStack(TIME_SLOT, ItemStack.of(Material.CLOCK)
+        ItemStack timeItem = ItemStack.of(Material.CLOCK)
                 .with(ItemComponent.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, List.of(
-                        Component.text(this.time.getFriendlyName(), NamedTextColor.GRAY)
-                                .decoration(TextDecoration.ITALIC, false))));
+                .with(ItemComponent.LORE, EnumLore.createLore(this.time, Time.values(), Time::getFriendlyName));
 
-        this.player.getInventory().setItemStack(PALETTE_SLOT, ItemStack.of(this.palette.getIcon())
+        ItemStack paletteItem = ItemStack.of(this.palette.getIcon())
                 .with(ItemComponent.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, List.of(
-                        Component.text(this.palette.getFriendlyName(), NamedTextColor.GRAY)
-                                .decoration(TextDecoration.ITALIC, false))));
+                .with(ItemComponent.LORE, EnumLore.createLore(this.palette, BlockPalette.values(), BlockPalette::getFriendlyName));
+
+        this.player.getInventory().setItemStack(MarathonGame.TIME_SLOT, timeItem);
+        this.player.getInventory().setItemStack(MarathonGame.PALETTE_SLOT, paletteItem);
     }
 
     public void reset() {
