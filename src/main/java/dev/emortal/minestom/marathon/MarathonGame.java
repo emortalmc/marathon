@@ -1,6 +1,8 @@
 package dev.emortal.minestom.marathon;
 
 import com.google.protobuf.Any;
+import com.google.protobuf.Descriptors;
+import com.google.protobuf.FieldMask;
 import com.google.protobuf.util.FieldMaskUtil;
 import dev.emortal.api.message.gamedata.UpdateGamePlayerDataMessage;
 import dev.emortal.api.model.gamedata.GameDataGameMode;
@@ -11,10 +13,12 @@ import dev.emortal.minestom.marathon.animator.BlockAnimator;
 import dev.emortal.minestom.marathon.animator.PathAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
 import dev.emortal.minestom.marathon.generator.Generator;
+import dev.emortal.minestom.marathon.options.BlockAnimation;
 import dev.emortal.minestom.marathon.options.BlockPalette;
 import dev.emortal.minestom.marathon.options.Time;
 import dev.emortal.minestom.marathon.util.BlockPacketUtils;
 import dev.emortal.minestom.marathon.util.EnumLore;
+import io.grpc.protobuf.ProtoUtils;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -55,9 +59,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public final class MarathonGame {
     public static final int TIME_SLOT = 20;
+    public static final int ANIMATOR_SLOT = 22;
     public static final int PALETTE_SLOT = 24;
 
     private static final int NEXT_BLOCKS_COUNT = 7;
@@ -65,11 +71,17 @@ public final class MarathonGame {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("mm:ss");
     public static final @NotNull Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
 
+    private static final FieldMask MARATHON_DATA_FIELDS = FieldMaskUtil.fromStringList(V1MarathonData.getDescriptor().getFields().stream()
+            .map(Descriptors.FieldDescriptor::getName)
+            .collect(Collectors.toUnmodifiableSet()));
+
     private final @NotNull Instance instance;
     private final @NotNull FriendlyKafkaProducer producer;
     private final @NotNull Player player;
     private final @NotNull Generator generator;
-    private final @NotNull BlockAnimator animator;
+
+    private @NotNull BlockAnimation animation;
+    private @NotNull BlockAnimator animator;
     private @NotNull BlockPalette palette;
     private @NotNull Time time;
 
@@ -90,6 +102,7 @@ public final class MarathonGame {
                  @NotNull Player player, V1MarathonData playerData) {
         this.time = Time.valueOf(playerData.getTime());
         this.palette = BlockPalette.valueOf(playerData.getBlockPalette());
+        this.animation = playerData.hasAnimation() ? BlockAnimation.valueOf(playerData.getAnimation()) : BlockAnimation.POPOUT;
 
         this.instance = MinecraftServer.getInstanceManager().createInstanceContainer(dimension);
         this.instance.setTimeRate(0);
@@ -105,9 +118,7 @@ public final class MarathonGame {
         this.producer = producer;
         this.player = player;
         this.generator = DefaultGenerator.INSTANCE;
-        this.animator = new PathAnimator();
-        this.palette = BlockPalette.valueOf(playerData.getBlockPalette());
-        this.time = Time.valueOf(playerData.getTime());
+        this.animator = this.animation.createAnimator();
 
         this.startRefreshDisplaysTask();
         this.reset();
@@ -125,18 +136,25 @@ public final class MarathonGame {
                 return;
             }
 
-            if (event.getSlot() == MarathonGame.TIME_SLOT) {
-                this.time = this.time.next();
-                event.getInstance().setTime(this.time.getTime());
-                this.playClickSound();
-                this.refreshInventory();
-                this.produceDataUpdate();
-            } else if (event.getSlot() == MarathonGame.PALETTE_SLOT) {
-                this.palette = this.palette.next();
-                this.playClickSound();
-                this.refreshInventory();
-                this.produceDataUpdate();
+            if (event.getSlot() != TIME_SLOT && event.getSlot() != PALETTE_SLOT && event.getSlot() != ANIMATOR_SLOT) {
+                return;
             }
+
+            switch (event.getSlot()) {
+                case TIME_SLOT -> {
+                    this.time = this.time.next();
+                    event.getInstance().setTime(this.time.getTime());
+                }
+                case ANIMATOR_SLOT -> {
+                    this.animation = this.animation.next();
+                    this.animator = this.animation.createAnimator();
+                }
+                case PALETTE_SLOT -> this.palette = this.palette.next();
+            }
+
+            this.playClickSound();
+            this.refreshInventory();
+            this.produceDataUpdate();
         });
     }
 
@@ -148,9 +166,10 @@ public final class MarathonGame {
                         V1MarathonData.newBuilder()
                                 .setBlockPalette(this.palette.name())
                                 .setTime(this.time.name())
+                                .setAnimation(this.animation.name())
                                 .build()
                 ))
-                .setDataMask(FieldMaskUtil.fromStringList(Set.of("block_palette", "time")))
+                .setDataMask(MARATHON_DATA_FIELDS)
                 .build());
     }
 
@@ -167,8 +186,13 @@ public final class MarathonGame {
                 .with(ItemComponent.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
                 .with(ItemComponent.LORE, EnumLore.createLore(this.palette, BlockPalette.values(), BlockPalette::getFriendlyName));
 
+        ItemStack animatorItem = ItemStack.of(Material.COMPASS)
+                .with(ItemComponent.ITEM_NAME, Component.text("Block Animation", NamedTextColor.GREEN))
+                .with(ItemComponent.LORE, EnumLore.createLore(this.animation, BlockAnimation.values(), BlockAnimation::getFriendlyName));
+
         this.player.getInventory().setItemStack(MarathonGame.TIME_SLOT, timeItem);
         this.player.getInventory().setItemStack(MarathonGame.PALETTE_SLOT, paletteItem);
+        this.player.getInventory().setItemStack(MarathonGame.ANIMATOR_SLOT, animatorItem);
     }
 
     public void reset() {
