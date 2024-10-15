@@ -1,4 +1,4 @@
-FROM --platform=$TARGETPLATFORM azul/zulu-openjdk-alpine:21-jre-headless
+FROM --platform=$TARGETPLATFORM azul/zulu-openjdk:21-jre
 
 RUN mkdir /app
 WORKDIR /app
