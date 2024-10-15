@@ -19,6 +19,27 @@ public enum BlockPalette {
             Block.DIRT,
             Block.MOSS_BLOCK
     ),
+    CAVE(
+            Material.DEEPSLATE_DIAMOND_ORE,
+            Block.DEEPSLATE_BRICKS,
+            "Cave",
+            Block.STONE,
+            Block.DIRT,
+            Block.COBBLESTONE,
+            Block.DEEPSLATE,
+            Block.ANDESITE,
+            Block.GRANITE,
+            Block.DIORITE,
+            Block.DRIPSTONE_BLOCK,
+            Block.COPPER_ORE,
+            Block.REDSTONE_ORE,
+            Block.LAPIS_ORE,
+            Block.COAL_ORE,
+            Block.GOLD_ORE,
+            Block.IRON_ORE,
+            Block.EMERALD_ORE,
+            Block.DIAMOND_ORE
+    ),
     NETHER(
             Material.NETHERRACK,
             Block.RESPAWN_ANCHOR,
@@ -73,6 +94,11 @@ public enum BlockPalette {
         this.blocks = List.of(blocks);
     }
 
+    @Override
+    public String toString() {
+        return this.friendlyName;
+    }
+
     public BlockPalette next() {
         return this.ordinal() == values().length - 1
                 ? values()[0]
@@ -81,10 +107,6 @@ public enum BlockPalette {
 
     public @NotNull Material getIcon() {
         return this.icon;
-    }
-
-    public @NotNull String getFriendlyName() {
-        return this.friendlyName;
     }
 
     public @NotNull Block getStarterBlock() {

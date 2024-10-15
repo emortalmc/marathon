@@ -1,10 +1,7 @@
-FROM --platform=$TARGETPLATFORM azul/zulu-openjdk:21-jre
+FROM --platform=$TARGETPLATFORM azul/zulu-openjdk-alpine:21-jre-headless
 
 RUN mkdir /app
 WORKDIR /app
-
-# Download packages
-RUN apt-get update && apt-get install -y wget
 
 COPY build/libs/*-all.jar /app/marathon.jar
 

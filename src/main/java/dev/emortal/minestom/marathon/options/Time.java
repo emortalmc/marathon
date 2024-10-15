@@ -16,6 +16,11 @@ public enum Time {
         this.friendlyName = friendlyName;
     }
 
+    @Override
+    public String toString() {
+        return this.friendlyName;
+    }
+
     public Time next() {
         return this.ordinal() == values().length - 1
                 ? values()[0]
@@ -24,9 +29,5 @@ public enum Time {
 
     public long getTime() {
         return this.time;
-    }
-
-    public @NotNull String getFriendlyName() {
-        return this.friendlyName;
     }
 }
