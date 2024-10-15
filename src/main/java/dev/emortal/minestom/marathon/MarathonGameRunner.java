@@ -53,9 +53,7 @@ public final class MarathonGameRunner extends Game {
 
     @Override
     public void onJoin(@NotNull Player player) {
-        V1MarathonData data = this.playerData.getOrDefault(
-                player.getUuid(),
-                Main.DEFAULT_PLAYER_DATA);
+        V1MarathonData data = this.playerData.getOrDefault(player.getUuid(), Main.DEFAULT_PLAYER_DATA);
 
         MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(
                 this.dimension, this.kafkaProducer, player, data));
