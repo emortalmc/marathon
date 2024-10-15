@@ -1,7 +1,6 @@
 package dev.emortal.minestom.marathon.generator;
 
 import net.minestom.server.coordinate.Point;
-import net.minestom.server.utils.position.PositionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;

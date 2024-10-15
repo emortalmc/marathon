@@ -8,9 +8,7 @@ import dev.emortal.api.message.gamedata.UpdateGamePlayerDataMessage;
 import dev.emortal.api.model.gamedata.GameDataGameMode;
 import dev.emortal.api.model.gamedata.V1MarathonData;
 import dev.emortal.api.utils.kafka.FriendlyKafkaProducer;
-import dev.emortal.minestom.core.module.messaging.MessagingModule;
 import dev.emortal.minestom.marathon.animator.BlockAnimator;
-import dev.emortal.minestom.marathon.animator.PathAnimator;
 import dev.emortal.minestom.marathon.generator.DefaultGenerator;
 import dev.emortal.minestom.marathon.generator.Generator;
 import dev.emortal.minestom.marathon.options.BlockAnimation;
@@ -18,7 +16,6 @@ import dev.emortal.minestom.marathon.options.BlockPalette;
 import dev.emortal.minestom.marathon.options.Time;
 import dev.emortal.minestom.marathon.util.BlockPacketUtils;
 import dev.emortal.minestom.marathon.util.EnumLore;
-import io.grpc.protobuf.ProtoUtils;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -56,7 +53,6 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -76,7 +72,7 @@ public final class MarathonGame {
             .collect(Collectors.toUnmodifiableSet()));
 
     private final @NotNull Instance instance;
-    private final @NotNull FriendlyKafkaProducer producer;
+    private final @Nullable FriendlyKafkaProducer producer;
     private final @NotNull Player player;
     private final @NotNull Generator generator;
 
@@ -98,7 +94,7 @@ public final class MarathonGame {
 
     private @Nullable Task breakingTask;
 
-    MarathonGame(@NotNull DynamicRegistry.Key<DimensionType> dimension, @NotNull FriendlyKafkaProducer producer,
+    MarathonGame(@NotNull DynamicRegistry.Key<DimensionType> dimension, @Nullable FriendlyKafkaProducer producer,
                  @NotNull Player player, V1MarathonData playerData) {
         this.time = Time.valueOf(playerData.getTime());
         this.palette = BlockPalette.valueOf(playerData.getBlockPalette());
@@ -159,6 +155,10 @@ public final class MarathonGame {
     }
 
     private void produceDataUpdate() {
+        if (this.producer == null) {
+            return;
+        }
+
         this.producer.produceAndForget(UpdateGamePlayerDataMessage.newBuilder()
                 .setGameMode(GameDataGameMode.MARATHON)
                 .setPlayerId(this.player.getUuid().toString())
@@ -180,15 +180,15 @@ public final class MarathonGame {
     void refreshInventory() {
         ItemStack timeItem = ItemStack.of(Material.CLOCK)
                 .with(ItemComponent.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, EnumLore.createLore(this.time, Time.values(), Time::getFriendlyName));
+                .with(ItemComponent.LORE, EnumLore.createLore(this.time, Time.values()));
 
         ItemStack paletteItem = ItemStack.of(this.palette.getIcon())
                 .with(ItemComponent.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, EnumLore.createLore(this.palette, BlockPalette.values(), BlockPalette::getFriendlyName));
+                .with(ItemComponent.LORE, EnumLore.createLore(this.palette, BlockPalette.values()));
 
         ItemStack animatorItem = ItemStack.of(Material.COMPASS)
                 .with(ItemComponent.ITEM_NAME, Component.text("Block Animation", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, EnumLore.createLore(this.animation, BlockAnimation.values(), BlockAnimation::getFriendlyName));
+                .with(ItemComponent.LORE, EnumLore.createLore(this.animation, BlockAnimation.values()));
 
         this.player.getInventory().setItemStack(MarathonGame.TIME_SLOT, timeItem);
         this.player.getInventory().setItemStack(MarathonGame.PALETTE_SLOT, paletteItem);
