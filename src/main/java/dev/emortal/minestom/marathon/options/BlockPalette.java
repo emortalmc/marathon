@@ -21,7 +21,7 @@ public enum BlockPalette {
     ),
     CAVE(
             Material.DEEPSLATE_DIAMOND_ORE,
-            Block.DEEPSLATE_BRICKS,
+            Block.BEDROCK,
             "Cave",
             Block.STONE,
             Block.DIRT,
