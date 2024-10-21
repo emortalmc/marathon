@@ -23,7 +23,7 @@ dependencies {
         exclude(group = "dev.emortal.api", module = "common-proto-sdk")
     }
 
-    implementation("dev.emortal.api:common-proto-sdk:2584fd2")
+    implementation("dev.emortal.api:common-proto-sdk:9152087")
     implementation("net.kyori:adventure-text-minimessage:4.17.0")
 }
 
