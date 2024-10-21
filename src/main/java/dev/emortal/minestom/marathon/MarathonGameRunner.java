@@ -25,14 +25,19 @@ public final class MarathonGameRunner extends Game {
     private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
     private final Map<UUID, V1MarathonData> playerData;
     private final DynamicRegistry.Key<DimensionType> dimension;
-    private final FriendlyKafkaProducer kafkaProducer;
+    private final @Nullable FriendlyKafkaProducer kafkaProducer;
 
-    public MarathonGameRunner(@NotNull GameCreationInfo creationInfo, @NotNull MessagingModule messaging,
+    public MarathonGameRunner(@NotNull GameCreationInfo creationInfo, @Nullable MessagingModule messaging,
                               @NotNull DynamicRegistry.Key<DimensionType> dimension, @NotNull Map<UUID, V1MarathonData> playerData) {
         super(creationInfo);
         this.playerData = playerData;
         this.dimension = dimension;
-        this.kafkaProducer = messaging.getKafkaProducer();
+
+        if (messaging != null) {
+            this.kafkaProducer = messaging.getKafkaProducer();
+        } else {
+            this.kafkaProducer = null;
+        }
 
         MovementListener movementListener = new MovementListener(this);
 
@@ -48,8 +53,11 @@ public final class MarathonGameRunner extends Game {
 
     @Override
     public void onJoin(@NotNull Player player) {
-        V1MarathonData data = this.playerData.get(player.getUuid());
-        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(this.dimension, this.kafkaProducer, player, data));
+        V1MarathonData data = this.playerData.getOrDefault(player.getUuid(), Main.DEFAULT_PLAYER_DATA);
+
+        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(
+                this.dimension, this.kafkaProducer, player, data));
+
         game.onJoin(player);
     }
 

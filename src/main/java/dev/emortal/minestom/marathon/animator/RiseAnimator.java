@@ -2,8 +2,6 @@ package dev.emortal.minestom.marathon.animator;
 
 import dev.emortal.minestom.marathon.MarathonGame;
 import dev.emortal.minestom.marathon.util.NoPhysicsEntity;
-import net.kyori.adventure.text.Component;
-import net.minestom.server.adventure.audience.Audiences;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;

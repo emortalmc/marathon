@@ -1,7 +1,6 @@
 package dev.emortal.minestom.marathon;
 
 import dev.emortal.api.model.gamedata.GameDataGameMode;
-import dev.emortal.api.model.gamedata.V1BlockSumoPlayerData;
 import dev.emortal.api.model.gamedata.V1MarathonData;
 import dev.emortal.api.utils.GrpcStubCollection;
 import dev.emortal.minestom.core.module.messaging.MessagingModule;
@@ -40,6 +39,7 @@ public final class Main {
                     .minPlayers(1)
                     .gameCreator(info -> {
                         Map<UUID, V1MarathonData> playerData;
+
                         try {
                             playerData = playerStorage.getPlayerData(info.playerIds());
                         } catch (Exception e) {

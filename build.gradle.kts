@@ -1,10 +1,12 @@
 plugins {
     java
-    id("com.gradleup.shadow") version "8.3.0"
+    application
+    id("com.gradleup.shadow") version "8.3.3"
 }
 
 group = "dev.emortal.minestom"
 version = "1.0-SNAPSHOT"
+application.mainClass = "dev.emortal.minestom.marathon.Main"
 
 repositories {
     mavenCentral()
@@ -20,8 +22,8 @@ dependencies {
     implementation("dev.emortal.minestom:game-sdk:4f505ad") {
         exclude(group = "dev.emortal.api", module = "common-proto-sdk")
     }
-    implementation("dev.emortal.api:common-proto-sdk:2584fd2")
 
+    implementation("dev.emortal.api:common-proto-sdk:2584fd2")
     implementation("net.kyori:adventure-text-minimessage:4.17.0")
 }
 
@@ -37,10 +39,13 @@ tasks {
 
         manifest {
             attributes(
-                "Main-Class" to "dev.emortal.minestom.marathon.Main",
                 "Multi-Release" to true
             )
         }
+    }
+
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
     }
 
     withType<AbstractArchiveTask> {
