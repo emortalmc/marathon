@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 public enum BlockAnimation {
     POPOUT(PathAnimator::new, "Pop Out"),
     RISE(RiseAnimator::new, "Rise"),
-    SUVAT(SuvatAnimator::new, "Jump"),
+//    SUVAT(SuvatAnimator::new, "Jump"), // TODO: fix, not functional: https://github.com/emortalmc/marathon/pull/25#issuecomment-2414694979
     SCALE(ScaleAnimator::new, "Grow"),
     NONE(NoAnimator::new, "None");
 
