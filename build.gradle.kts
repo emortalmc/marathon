@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.emortal.minestom:game-sdk:4f505ad") {
+    implementation("dev.emortal.minestom:game-sdk:8385395") {
         exclude(group = "dev.emortal.api", module = "common-proto-sdk")
     }
 
