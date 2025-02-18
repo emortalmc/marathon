@@ -24,7 +24,7 @@ dependencies {
     }
 
     implementation("dev.emortal.api:common-proto-sdk:2584fd2")
-    implementation("net.kyori:adventure-text-minimessage:4.17.0")
+    implementation("net.kyori:adventure-text-minimessage:4.19.0")
 }
 
 java {
