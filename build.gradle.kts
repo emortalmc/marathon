@@ -1,7 +1,7 @@
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "8.3.3"
+    id("com.gradleup.shadow") version "9.0.0-beta11"
 }
 
 group = "dev.emortal.minestom"
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.emortal.minestom:game-sdk:4f505ad") {
+    implementation("dev.emortal.minestom:game-sdk:505faaa") {
         exclude(group = "dev.emortal.api", module = "common-proto-sdk")
     }
 

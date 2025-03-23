@@ -29,7 +29,6 @@ import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.event.player.PlayerChunkUnloadEvent;
-import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
@@ -63,7 +62,7 @@ public final class MarathonGame {
     public static final int PALETTE_SLOT = 24;
 
     private static final int NEXT_BLOCKS_COUNT = 7;
-    private static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
+    public static final Pos RESET_POINT = new Pos(0.5, 150, 0.5);
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("mm:ss");
     public static final @NotNull Tag<Boolean> MARATHON_ENTITY_TAG = Tag.Boolean("marathonEntity");
 
@@ -122,8 +121,6 @@ public final class MarathonGame {
 
     void onJoin(@NotNull Player player) {
         player.setGameMode(GameMode.ADVENTURE);
-        player.setRespawnPoint(RESET_POINT.add(0, 1, 0));
-        player.eventNode().addListener(PlayerSpawnEvent.class, event -> this.refreshInventory());
 
         player.eventNode().addListener(InventoryPreClickEvent.class, event -> {
             event.setCancelled(true);
@@ -177,7 +174,7 @@ public final class MarathonGame {
         this.instance.scheduleNextTick(MinecraftServer.getInstanceManager()::unregisterInstance);
     }
 
-    void refreshInventory() {
+    public void refreshInventory() {
         ItemStack timeItem = ItemStack.of(Material.CLOCK)
                 .with(ItemComponent.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
                 .with(ItemComponent.LORE, EnumLore.createLore(this.time, Time.values()));

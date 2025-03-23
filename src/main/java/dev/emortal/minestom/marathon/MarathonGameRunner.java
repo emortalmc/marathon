@@ -9,6 +9,7 @@ import dev.emortal.minestom.marathon.listener.MovementListener;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.item.ItemDropEvent;
 import net.minestom.server.event.player.PlayerMoveEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.event.player.PlayerSwapItemEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.registry.DynamicRegistry;
@@ -20,6 +21,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static dev.emortal.minestom.marathon.MarathonGame.RESET_POINT;
 
 public final class MarathonGameRunner extends Game {
     private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
@@ -49,6 +52,18 @@ public final class MarathonGameRunner extends Game {
 
     @Override
     public void start() {
+    }
+
+    @Override
+    public void onPreJoin(@NotNull Player player) {
+        player.setRespawnPoint(RESET_POINT.add(0, 1, 0));
+
+        V1MarathonData data = this.playerData.getOrDefault(player.getUuid(), Main.DEFAULT_PLAYER_DATA);
+
+        MarathonGame game = this.games.computeIfAbsent(player.getUuid(), uuid -> new MarathonGame(
+                this.dimension, this.kafkaProducer, player, data));
+
+        player.eventNode().addListener(PlayerSpawnEvent.class, event -> game.refreshInventory());
     }
 
     @Override
