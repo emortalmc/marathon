@@ -9,9 +9,9 @@ import dev.emortal.minestom.gamesdk.config.GameSdkConfig;
 import dev.emortal.minestom.gamesdk.util.GamePlayerDataRepository;
 import dev.emortal.minestom.marathon.options.BlockPalette;
 import dev.emortal.minestom.marathon.options.Time;
+import net.kyori.adventure.key.Key;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.registry.DynamicRegistry;
-import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ public final class Main {
     public static void main(String[] args) {
         MinestomGameServer.create(moduleManager -> {
             DimensionType dimensionType = DimensionType.builder().ambientLight(1F).build();
-            DynamicRegistry.Key<DimensionType> dimension = MinecraftServer.getDimensionTypeRegistry().register(NamespaceID.from("fullbright"), dimensionType);
+            DynamicRegistry.Key<DimensionType> dimension = MinecraftServer.getDimensionTypeRegistry().register(Key.key("fullbright"), dimensionType);
 
             GamePlayerDataRepository<V1MarathonData> playerStorage = new GamePlayerDataRepository<>(
                     GrpcStubCollection.getGamePlayerDataService().orElse(null), DEFAULT_PLAYER_DATA,

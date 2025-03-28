@@ -22,6 +22,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Entity;
@@ -33,7 +34,6 @@ import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.click.ClickType;
-import net.minestom.server.item.ItemComponent;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.ConnectionState;
@@ -176,16 +176,16 @@ public final class MarathonGame {
 
     public void refreshInventory() {
         ItemStack timeItem = ItemStack.of(Material.CLOCK)
-                .with(ItemComponent.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, EnumLore.createLore(this.time, Time.values()));
+                .with(DataComponents.ITEM_NAME, Component.text("Time of Day", NamedTextColor.GREEN))
+                .with(DataComponents.LORE, EnumLore.createLore(this.time, Time.values()));
 
         ItemStack paletteItem = ItemStack.of(this.palette.getIcon())
-                .with(ItemComponent.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, EnumLore.createLore(this.palette, BlockPalette.values()));
+                .with(DataComponents.ITEM_NAME, Component.text("Block Palette", NamedTextColor.GREEN))
+                .with(DataComponents.LORE, EnumLore.createLore(this.palette, BlockPalette.values()));
 
         ItemStack animatorItem = ItemStack.of(Material.COMPASS)
-                .with(ItemComponent.ITEM_NAME, Component.text("Block Animation", NamedTextColor.GREEN))
-                .with(ItemComponent.LORE, EnumLore.createLore(this.animation, BlockAnimation.values()));
+                .with(DataComponents.ITEM_NAME, Component.text("Block Animation", NamedTextColor.GREEN))
+                .with(DataComponents.LORE, EnumLore.createLore(this.animation, BlockAnimation.values()));
 
         this.player.getInventory().setItemStack(MarathonGame.TIME_SLOT, timeItem);
         this.player.getInventory().setItemStack(MarathonGame.PALETTE_SLOT, paletteItem);
