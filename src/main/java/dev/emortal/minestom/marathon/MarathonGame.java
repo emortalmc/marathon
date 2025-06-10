@@ -33,11 +33,11 @@ import net.minestom.server.event.player.PlayerChunkUnloadEvent;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.inventory.click.ClickType;
+import net.minestom.server.inventory.click.Click;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.network.ConnectionState;
-import net.minestom.server.registry.DynamicRegistry;
+import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.sound.SoundEvent;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.timer.Task;
@@ -93,7 +93,7 @@ public final class MarathonGame {
 
     private @Nullable Task breakingTask;
 
-    MarathonGame(@NotNull DynamicRegistry.Key<DimensionType> dimension, @Nullable FriendlyKafkaProducer producer,
+    MarathonGame(@NotNull RegistryKey<DimensionType> dimension, @Nullable FriendlyKafkaProducer producer,
                  @NotNull Player player, V1MarathonData playerData) {
         this.time = Time.valueOf(playerData.getTime());
         this.palette = BlockPalette.valueOf(playerData.getBlockPalette());
@@ -125,7 +125,7 @@ public final class MarathonGame {
         player.eventNode().addListener(InventoryPreClickEvent.class, event -> {
             event.setCancelled(true);
 
-            if (event.getClickType() != ClickType.LEFT_CLICK) {
+            if (!(event.getClick() instanceof Click.Left)) {
                 return;
             }
 

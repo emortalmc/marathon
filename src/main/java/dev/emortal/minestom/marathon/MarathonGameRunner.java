@@ -12,7 +12,7 @@ import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.event.player.PlayerSwapItemEvent;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.registry.DynamicRegistry;
+import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,11 +27,11 @@ import static dev.emortal.minestom.marathon.MarathonGame.RESET_POINT;
 public final class MarathonGameRunner extends Game {
     private final Map<UUID, MarathonGame> games = Collections.synchronizedMap(new HashMap<>());
     private final Map<UUID, V1MarathonData> playerData;
-    private final DynamicRegistry.Key<DimensionType> dimension;
+    private final RegistryKey<DimensionType> dimension;
     private final @Nullable FriendlyKafkaProducer kafkaProducer;
 
     public MarathonGameRunner(@NotNull GameCreationInfo creationInfo, @Nullable MessagingModule messaging,
-                              @NotNull DynamicRegistry.Key<DimensionType> dimension, @NotNull Map<UUID, V1MarathonData> playerData) {
+                              @NotNull RegistryKey<DimensionType> dimension, @NotNull Map<UUID, V1MarathonData> playerData) {
         super(creationInfo);
         this.playerData = playerData;
         this.dimension = dimension;
