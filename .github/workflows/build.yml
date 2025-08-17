@@ -8,11 +8,9 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "emortalmc/actions/java/build@main"
+      - uses: "emortalmc/actions/java/nativeimage@main"
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
-          java-version: "21"
-          java-distribution: "zulu"
 
   deploy:
     needs: "build"

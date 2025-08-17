@@ -1,0 +1,2391 @@
+{
+  "reflection": [
+    {
+      "type": "[B"
+    },
+    {
+      "type": "[C"
+    },
+    {
+      "type": "[D"
+    },
+    {
+      "type": "[F"
+    },
+    {
+      "type": "[I"
+    },
+    {
+      "type": "[J"
+    },
+    {
+      "type": "[Lio.micrometer.core.instrument.distribution.FixedBoundaryHistogram;"
+    },
+    {
+      "type": "[Ljava.lang.String;"
+    },
+    {
+      "type": "[Ljavax.management.openmbean.CompositeData;"
+    },
+    {
+      "type": "[Lorg.HdrHistogram.DoubleRecorder;"
+    },
+    {
+      "type": "[S"
+    },
+    {
+      "type": "[Z"
+    },
+    {
+      "type": "android.app.Application"
+    },
+    {
+      "type": "ch.qos.logback.classic.joran.SerializedModelConfigurator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "ch.qos.logback.classic.spi.LogbackServiceProvider"
+    },
+    {
+      "type": "ch.qos.logback.classic.util.DefaultJoranConfigurator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "ch.qos.logback.core.ConsoleAppender",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "ch.qos.logback.core.OutputStreamAppender",
+      "methods": [
+        {
+          "name": "setEncoder",
+          "parameterTypes": [
+            "ch.qos.logback.core.encoder.Encoder"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ch.qos.logback.core.encoder.Encoder"
+    },
+    {
+      "type": "com.fasterxml.jackson.databind.ext.Java7SupportImpl",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.google.common.util.concurrent.AbstractFuture",
+      "fields": [
+        {
+          "name": "listeners"
+        },
+        {
+          "name": "value"
+        },
+        {
+          "name": "waiters"
+        }
+      ]
+    },
+    {
+      "type": "com.google.common.util.concurrent.AbstractFuture$Waiter",
+      "fields": [
+        {
+          "name": "next"
+        },
+        {
+          "name": "thread"
+        }
+      ]
+    },
+    {
+      "type": "com.google.protobuf.Any"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorMessageInfoFactory",
+      "methods": [
+        {
+          "name": "getInstance",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$Builder"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$EnumType"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$FieldPresence"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$JsonFormat"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$MessageEncoding"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$RepeatedFieldEncoding"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$Utf8Validation"
+    },
+    {
+      "type": "com.google.protobuf.ExtensionRegistry",
+      "methods": [
+        {
+          "name": "getEmptyRegistry",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.google.protobuf.FieldMask"
+    },
+    {
+      "type": "com.google.protobuf.Timestamp"
+    },
+    {
+      "type": "com.ibm.lang.management.OperatingSystemMXBean"
+    },
+    {
+      "type": "com.sun.crypto.provider.AESCipher$General",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.ARCFOURCipher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Poly1305",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.DESCipher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.DESedeCipher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.DHParameters",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.GaloisCounterMode$AESGCM",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.HmacCore$HmacSHA256",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.crypto.provider.TlsMasterSecretGenerator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.sun.jndi.dns.DnsContextFactory"
+    },
+    {
+      "type": "com.sun.management.GarbageCollectionNotificationInfo"
+    },
+    {
+      "type": "com.sun.management.GarbageCollectorMXBean"
+    },
+    {
+      "type": "com.sun.management.GcInfo",
+      "fields": [
+        {
+          "name": "builder"
+        },
+        {
+          "name": "extAttributes"
+        }
+      ]
+    },
+    {
+      "type": "com.sun.management.HotSpotDiagnosticMXBean"
+    },
+    {
+      "type": "com.sun.management.OperatingSystemMXBean"
+    },
+    {
+      "type": "com.sun.management.ThreadMXBean"
+    },
+    {
+      "type": "com.sun.management.UnixOperatingSystemMXBean"
+    },
+    {
+      "type": "com.sun.management.VMOption"
+    },
+    {
+      "type": "com.sun.management.internal.GarbageCollectorExtImpl"
+    },
+    {
+      "type": "com.sun.management.internal.HotSpotDiagnostic"
+    },
+    {
+      "type": "com.sun.management.internal.HotSpotThreadImpl"
+    },
+    {
+      "type": "com.sun.management.internal.OperatingSystemImpl"
+    },
+    {
+      "type": "com.sun.management.internal.VirtualThreadSchedulerImpls$VirtualThreadSchedulerImpl"
+    },
+    {
+      "type": "com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.common.ConfigItem",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "int",
+            "java.lang.String",
+            "java.util.List"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.common.ConfigMap",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "boolean",
+            "java.lang.String",
+            "int",
+            "dev.emortal.api.liveconfigparser.configs.common.ConfigItem"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.common.ConfigNPC",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "java.util.List",
+            "dev.emortal.api.liveconfigparser.configs.common.ConfigSkin"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.common.ConfigSkin",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "boolean",
+            "java.lang.String",
+            "int",
+            "java.lang.String",
+            "java.lang.String",
+            "int",
+            "int",
+            "dev.emortal.api.liveconfigparser.configs.common.ConfigItem",
+            "dev.emortal.api.liveconfigparser.configs.common.ConfigNPC",
+            "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$PartyRestrictions",
+            "java.util.Map",
+            "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$MatchmakerInfo"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$MatchmakerInfo",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$MatchmakerInfo$MatchMethod",
+            "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$MatchmakerInfo$SelectMethod",
+            "long",
+            "boolean"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$MatchmakerInfo$MatchMethod",
+      "allDeclaredFields": true
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$MatchmakerInfo$SelectMethod",
+      "allDeclaredFields": true
+    },
+    {
+      "type": "dev.emortal.api.liveconfigparser.configs.gamemode.GameModeConfig$PartyRestrictions",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "int",
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "dev.emortal.api.message.accountconnmanager.AccountConnectedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.accountconnmanager.AccountConnectedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.accountconnmanager.AccountConnectionRemovedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.accountconnmanager.AccountConnectionRemovedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.badge.PlayerActiveBadgeChangedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.badge.PlayerActiveBadgeChangedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.badge.PlayerBadgeAddedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.badge.PlayerBadgeAddedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.badge.PlayerBadgeRemovedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.badge.PlayerBadgeRemovedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerChatMessageMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerChatMessageMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerConnectMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerConnectMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerDisconnectMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerDisconnectMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerSwitchServerMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.common.PlayerSwitchServerMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.gamedata.UpdateGamePlayerDataMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.gamedata.UpdateGamePlayerDataMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.gamesdk.GameReadyMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.gamesdk.GameReadyMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.CommonGameData"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.GameFinishMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.GameFinishMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.GameStartMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.GameStartMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.GameUpdateMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.gametracker.GameUpdateMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.MatchCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.MatchCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchDeletedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchDeletedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchDeletedMessage$Reason"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchUpdatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.PendingMatchUpdatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketDeletedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketDeletedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketDeletedMessage$Reason"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketUpdatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.matchmaker.TicketUpdatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.messagehandler.ChatMessageCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.messagehandler.ChatMessageCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.messagehandler.PrivateMessageCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.messagehandler.PrivateMessageCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.EventDeleteMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.EventDeleteMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.EventDisplayMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.EventDisplayMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.EventStartMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.EventStartMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyBroadcastMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyBroadcastMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyDeletedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyDeletedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyEmptiedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyEmptiedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyInviteCreatedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyInviteCreatedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyLeaderChangedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyLeaderChangedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyOpenChangedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyOpenChangedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyPlayerJoinedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyPlayerJoinedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyPlayerLeftMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartyPlayerLeftMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartySettingsChangedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.party.PartySettingsChangedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.permission.PlayerRolesUpdateMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.permission.PlayerRolesUpdateMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.permission.PlayerRolesUpdateMessage$ChangeType"
+    },
+    {
+      "type": "dev.emortal.api.message.permission.RoleUpdateMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.permission.RoleUpdateMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.permission.RoleUpdateMessage$ChangeType"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendAddedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendAddedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendConnectionMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendConnectionMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendRemovedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendRemovedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendRequestReceivedMessage"
+    },
+    {
+      "type": "dev.emortal.api.message.relationship.FriendRequestReceivedMessage$Builder"
+    },
+    {
+      "type": "dev.emortal.api.model.accountconnmanager.ConnectionType"
+    },
+    {
+      "type": "dev.emortal.api.model.accountconnmanager.ConnectionUser"
+    },
+    {
+      "type": "dev.emortal.api.model.badge.Badge"
+    },
+    {
+      "type": "dev.emortal.api.model.common.PlayerSkin"
+    },
+    {
+      "type": "dev.emortal.api.model.gamedata.GameDataGameMode"
+    },
+    {
+      "type": "dev.emortal.api.model.matchmaker.Match"
+    },
+    {
+      "type": "dev.emortal.api.model.matchmaker.PendingMatch"
+    },
+    {
+      "type": "dev.emortal.api.model.matchmaker.Ticket"
+    },
+    {
+      "type": "dev.emortal.api.model.messagehandler.ChatMessage"
+    },
+    {
+      "type": "dev.emortal.api.model.messagehandler.PrivateMessage"
+    },
+    {
+      "type": "dev.emortal.api.model.party.EventData"
+    },
+    {
+      "type": "dev.emortal.api.model.party.Party"
+    },
+    {
+      "type": "dev.emortal.api.model.party.PartyInvite"
+    },
+    {
+      "type": "dev.emortal.api.model.party.PartyMember"
+    },
+    {
+      "type": "dev.emortal.api.model.party.PartySettings"
+    },
+    {
+      "type": "dev.emortal.api.model.permission.Role"
+    },
+    {
+      "type": "dev.emortal.api.model.relationship.FriendRequest"
+    },
+    {
+      "type": "io.grpc.census.InternalCensusStatsAccessor"
+    },
+    {
+      "type": "io.grpc.census.InternalCensusTracingAccessor"
+    },
+    {
+      "type": "io.grpc.internal.DnsNameResolverProvider"
+    },
+    {
+      "type": "io.grpc.internal.JndiResourceResolverFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.grpc.internal.PickFirstLoadBalancerProvider"
+    },
+    {
+      "type": "io.grpc.internal.SerializingExecutor",
+      "fields": [
+        {
+          "name": "runState"
+        }
+      ]
+    },
+    {
+      "type": "io.grpc.netty.NettyChannelProvider"
+    },
+    {
+      "type": "io.grpc.netty.NettyClientHandler"
+    },
+    {
+      "type": "io.grpc.netty.ProtocolNegotiators$GrpcNegotiationHandler"
+    },
+    {
+      "type": "io.grpc.netty.ProtocolNegotiators$WaitUntilActiveHandler"
+    },
+    {
+      "type": "io.grpc.netty.UdsNameResolverProvider"
+    },
+    {
+      "type": "io.grpc.netty.UdsNettyChannelProvider"
+    },
+    {
+      "type": "io.grpc.netty.WriteBufferingAndExceptionHandler"
+    },
+    {
+      "type": "io.grpc.okhttp.OkHttpChannelProvider"
+    },
+    {
+      "type": "io.grpc.override.ContextStorageOverride"
+    },
+    {
+      "type": "io.grpc.util.OutlierDetectionLoadBalancerProvider"
+    },
+    {
+      "type": "io.grpc.util.SecretRoundRobinLoadBalancerProvider$Provider"
+    },
+    {
+      "type": "io.kubernetes.client.openapi.models.V1ConfigMap",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.kubernetes.client.openapi.models.V1ConfigMapList",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.kubernetes.client.openapi.models.V1ListMeta",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.kubernetes.client.openapi.models.V1ManagedFieldsEntry",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.kubernetes.client.openapi.models.V1ObjectMeta",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.kubernetes.client.openapi.models.V1OwnerReference",
+      "allDeclaredFields": true
+    },
+    {
+      "type": "io.micrometer.core.instrument.distribution.AbstractTimeWindowHistogram",
+      "fields": [
+        {
+          "name": "rotating"
+        }
+      ]
+    },
+    {
+      "type": "io.micrometer.core.instrument.distribution.TimeWindowMax",
+      "fields": [
+        {
+          "name": "rotating"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.buffer.AbstractByteBufAllocator"
+    },
+    {
+      "type": "io.netty.buffer.AbstractReferenceCountedByteBuf",
+      "fields": [
+        {
+          "name": "refCnt"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.AbstractChannelHandlerContext",
+      "fields": [
+        {
+          "name": "handlerState"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.ChannelOutboundBuffer",
+      "fields": [
+        {
+          "name": "totalPendingSize"
+        },
+        {
+          "name": "unwritable"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.DefaultChannelConfig",
+      "fields": [
+        {
+          "name": "autoRead"
+        },
+        {
+          "name": "writeBufferWaterMark"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.DefaultChannelPipeline",
+      "fields": [
+        {
+          "name": "estimatorHandle"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.channel.DefaultChannelPipeline$HeadContext"
+    },
+    {
+      "type": "io.netty.channel.DefaultChannelPipeline$TailContext"
+    },
+    {
+      "type": "io.netty.channel.epoll.Epoll"
+    },
+    {
+      "type": "io.netty.channel.socket.nio.NioSocketChannel",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.DefaultAttributeMap",
+      "fields": [
+        {
+          "name": "attributes"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.Recycler$DefaultHandle",
+      "fields": [
+        {
+          "name": "state"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.ReferenceCountUtil"
+    },
+    {
+      "type": "io.netty.util.ResourceLeakDetector$DefaultResourceLeak",
+      "fields": [
+        {
+          "name": "droppedRecords"
+        },
+        {
+          "name": "head"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.concurrent.DefaultPromise",
+      "fields": [
+        {
+          "name": "result"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.concurrent.SingleThreadEventExecutor",
+      "fields": [
+        {
+          "name": "state"
+        },
+        {
+          "name": "threadProperties"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields",
+      "fields": [
+        {
+          "name": "producerLimit"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields",
+      "fields": [
+        {
+          "name": "consumerIndex"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields",
+      "fields": [
+        {
+          "name": "producerIndex"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueConsumerIndexField",
+      "fields": [
+        {
+          "name": "consumerIndex"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerIndexField",
+      "fields": [
+        {
+          "name": "producerIndex"
+        }
+      ]
+    },
+    {
+      "type": "io.netty.util.internal.shaded.org.jctools.queues.MpscArrayQueueProducerLimitField",
+      "fields": [
+        {
+          "name": "producerLimit"
+        }
+      ]
+    },
+    {
+      "type": "io.perfmark.impl.SecretPerfMarkImpl$PerfMarkImpl"
+    },
+    {
+      "type": "java.lang.Boolean",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Byte",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Character",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Class",
+      "methods": [
+        {
+          "name": "getRecordComponents",
+          "parameterTypes": []
+        },
+        {
+          "name": "isRecord",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Deprecated"
+    },
+    {
+      "type": "java.lang.Double",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Float",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Integer",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Long",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.ProcessHandle",
+      "methods": [
+        {
+          "name": "current",
+          "parameterTypes": []
+        },
+        {
+          "name": "pid",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Record",
+      "allDeclaredFields": true
+    },
+    {
+      "type": "java.lang.Short",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.StackTraceElement"
+    },
+    {
+      "type": "java.lang.String",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Void",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.management.BufferPoolMXBean"
+    },
+    {
+      "type": "java.lang.management.ClassLoadingMXBean"
+    },
+    {
+      "type": "java.lang.management.CompilationMXBean"
+    },
+    {
+      "type": "java.lang.management.LockInfo"
+    },
+    {
+      "type": "java.lang.management.MemoryMXBean"
+    },
+    {
+      "type": "java.lang.management.MemoryManagerMXBean"
+    },
+    {
+      "type": "java.lang.management.MemoryPoolMXBean"
+    },
+    {
+      "type": "java.lang.management.MemoryUsage",
+      "methods": [
+        {
+          "name": "from",
+          "parameterTypes": [
+            "javax.management.openmbean.CompositeData"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.management.MonitorInfo"
+    },
+    {
+      "type": "java.lang.management.PlatformLoggingMXBean"
+    },
+    {
+      "type": "java.lang.management.RuntimeMXBean"
+    },
+    {
+      "type": "java.lang.management.ThreadInfo"
+    },
+    {
+      "type": "java.lang.reflect.RecordComponent",
+      "methods": [
+        {
+          "name": "getName",
+          "parameterTypes": []
+        },
+        {
+          "name": "getType",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.math.BigDecimal"
+    },
+    {
+      "type": "java.math.BigInteger"
+    },
+    {
+      "type": "java.nio.Bits",
+      "fields": [
+        {
+          "name": "MAX_MEMORY"
+        },
+        {
+          "name": "UNALIGNED"
+        }
+      ]
+    },
+    {
+      "type": "java.nio.Buffer",
+      "fields": [
+        {
+          "name": "address"
+        },
+        {
+          "name": "capacity"
+        }
+      ]
+    },
+    {
+      "type": "java.nio.ByteBuffer"
+    },
+    {
+      "type": "java.nio.DirectByteBuffer"
+    },
+    {
+      "type": "java.nio.channels.spi.SelectorProvider"
+    },
+    {
+      "type": "java.security.AlgorithmParametersSpi"
+    },
+    {
+      "type": "java.security.KeyStoreSpi"
+    },
+    {
+      "type": "java.security.interfaces.RSAPrivateKey"
+    },
+    {
+      "type": "java.security.interfaces.RSAPublicKey"
+    },
+    {
+      "type": "java.sql.Date"
+    },
+    {
+      "type": "java.util.Date"
+    },
+    {
+      "type": "java.util.concurrent.atomic.LongAdder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "add",
+          "parameterTypes": [
+            "long"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.util.logging.LogManager",
+      "methods": [
+        {
+          "name": "getLoggingMXBean",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.util.logging.LoggingMXBean"
+    },
+    {
+      "type": "java.util.zip.CRC32C",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.util.zip.Checksum",
+      "methods": [
+        {
+          "name": "update",
+          "parameterTypes": [
+            "java.nio.ByteBuffer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "javax.management.MBeanOperationInfo"
+    },
+    {
+      "type": "javax.management.MBeanServerBuilder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "javax.management.ObjectName"
+    },
+    {
+      "type": "javax.management.StandardEmitterMBean"
+    },
+    {
+      "type": "javax.management.openmbean.CompositeData"
+    },
+    {
+      "type": "javax.management.openmbean.OpenMBeanOperationInfoSupport"
+    },
+    {
+      "type": "javax.management.openmbean.TabularData"
+    },
+    {
+      "type": "javax.naming.directory.InitialDirContext"
+    },
+    {
+      "type": "jdk.internal.misc.Unsafe",
+      "methods": [
+        {
+          "name": "getUnsafe",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "jdk.management.VirtualThreadSchedulerMXBean"
+    },
+    {
+      "type": "jdk.management.jfr.ConfigurationInfo"
+    },
+    {
+      "type": "jdk.management.jfr.EventTypeInfo"
+    },
+    {
+      "type": "jdk.management.jfr.FlightRecorderMXBean"
+    },
+    {
+      "type": "jdk.management.jfr.FlightRecorderMXBeanImpl"
+    },
+    {
+      "type": "jdk.management.jfr.RecordingInfo"
+    },
+    {
+      "type": "jdk.management.jfr.SettingDescriptorInfo"
+    },
+    {
+      "type": "libcore.io.Memory"
+    },
+    {
+      "type": "net.logstash.logback.encoder.LogstashEncoder",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "net.minestom.server.adventure.provider.MinestomComponentLoggerProvider"
+    },
+    {
+      "type": "net.minestom.server.adventure.provider.MinestomLegacyComponentSerializerProvider"
+    },
+    {
+      "type": "net.minestom.server.entity.EntityView$Option",
+      "fields": [
+        {
+          "name": "auto"
+        }
+      ]
+    },
+    {
+      "type": "net.minestom.server.entity.MetadataDef"
+    },
+    {
+      "type": "net.minestom.server.entity.MetadataDef$BlockDisplay"
+    },
+    {
+      "type": "net.minestom.server.entity.MetadataDef$Display"
+    },
+    {
+      "type": "net.minestom.server.entity.MetadataDef$LivingEntity"
+    },
+    {
+      "type": "net.minestom.server.entity.MetadataDef$Player"
+    },
+    {
+      "type": "net.minestom.server.entity.MetadataHolder",
+      "fields": [
+        {
+          "name": "notifyAboutChanges"
+        }
+      ]
+    },
+    {
+      "type": "net.minestom.server.event.EventNodeLazyImpl",
+      "fields": [
+        {
+          "name": "mapped"
+        }
+      ]
+    },
+    {
+      "type": "net.minestom.server.timer.TaskImpl",
+      "fields": [
+        {
+          "name": "parked"
+        }
+      ]
+    },
+    {
+      "type": "org.HdrHistogram.AbstractHistogram",
+      "fields": [
+        {
+          "name": "maxValue"
+        },
+        {
+          "name": "minNonZeroValue"
+        }
+      ]
+    },
+    {
+      "type": "org.HdrHistogram.ConcurrentHistogram",
+      "fields": [
+        {
+          "name": "totalCount"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "long",
+            "long",
+            "int"
+          ]
+        },
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "org.HdrHistogram.AbstractHistogram"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.HdrHistogram.Histogram",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "long",
+            "long",
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "org.HdrHistogram.WriterReaderPhaser",
+      "fields": [
+        {
+          "name": "evenEndEpoch"
+        },
+        {
+          "name": "oddEndEpoch"
+        },
+        {
+          "name": "startEpoch"
+        }
+      ]
+    },
+    {
+      "type": "org.apache.kafka.clients.consumer.CooperativeStickyAssignor",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.apache.kafka.clients.consumer.RangeAssignor",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "org.apache.kafka.common.utils.AppInfoParser$AppInfo"
+    },
+    {
+      "type": "org.apache.kafka.common.utils.AppInfoParser$AppInfoMBean"
+    },
+    {
+      "type": "org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields",
+      "fields": [
+        {
+          "name": "producerLimit"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields",
+      "fields": [
+        {
+          "name": "consumerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields",
+      "fields": [
+        {
+          "name": "producerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpUnboundedXaddArrayQueueConsumerFields",
+      "fields": [
+        {
+          "name": "consumerChunk"
+        },
+        {
+          "name": "consumerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpUnboundedXaddArrayQueueProducerChunk",
+      "fields": [
+        {
+          "name": "producerChunk"
+        },
+        {
+          "name": "producerChunkIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpUnboundedXaddArrayQueueProducerFields",
+      "fields": [
+        {
+          "name": "producerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpUnboundedXaddChunk",
+      "fields": [
+        {
+          "name": "index"
+        },
+        {
+          "name": "next"
+        },
+        {
+          "name": "prev"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpscArrayQueueConsumerIndexField",
+      "fields": [
+        {
+          "name": "consumerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpscArrayQueueProducerIndexField",
+      "fields": [
+        {
+          "name": "producerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.MpscArrayQueueProducerLimitField",
+      "fields": [
+        {
+          "name": "producerLimit"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.SpscArrayQueueConsumerIndexField",
+      "fields": [
+        {
+          "name": "consumerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.jctools.queues.SpscArrayQueueProducerIndexFields",
+      "fields": [
+        {
+          "name": "producerIndex"
+        }
+      ]
+    },
+    {
+      "type": "org.robolectric.Robolectric"
+    },
+    {
+      "type": "space.vectrix.flare.fastutil.Int2ObjectSyncMapImpl$ExpungingEntryImpl",
+      "fields": [
+        {
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "space.vectrix.flare.fastutil.Long2ObjectSyncMapImpl$ExpungingEntryImpl",
+      "fields": [
+        {
+          "name": "value"
+        }
+      ]
+    },
+    {
+      "type": "sun.management.ClassLoadingImpl"
+    },
+    {
+      "type": "sun.management.CompilationImpl"
+    },
+    {
+      "type": "sun.management.ManagementFactoryHelper$1"
+    },
+    {
+      "type": "sun.management.ManagementFactoryHelper$PlatformLoggingImpl"
+    },
+    {
+      "type": "sun.management.MemoryImpl"
+    },
+    {
+      "type": "sun.management.MemoryManagerImpl"
+    },
+    {
+      "type": "sun.management.MemoryPoolImpl"
+    },
+    {
+      "type": "sun.management.RuntimeImpl"
+    },
+    {
+      "type": "sun.misc.SharedSecrets"
+    },
+    {
+      "type": "sun.misc.Unsafe",
+      "allDeclaredFields": true,
+      "methods": [
+        {
+          "name": "invokeCleaner",
+          "parameterTypes": [
+            "java.nio.ByteBuffer"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.nio.ch.SelectorImpl",
+      "fields": [
+        {
+          "name": "publicSelectedKeys"
+        },
+        {
+          "name": "selectedKeys"
+        }
+      ]
+    },
+    {
+      "type": "sun.security.pkcs12.PKCS12KeyStore",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.pkcs12.PKCS12KeyStore$DualFormatPKCS12",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.DSA$SHA224withDSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.DSA$SHA256withDSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.MD5",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.NativePRNG",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.security.SecureRandomParameters"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA2$SHA224",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA2$SHA256",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA5$SHA384",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.SHA5$SHA512",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.X509Factory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.provider.certpath.PKIXCertPathValidator",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.PSSParameters",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSAKeyFactory$Legacy",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSAPSSSignature",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSASignature$SHA224withRSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.rsa.RSASignature$SHA256withRSA",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.ssl.SSLContextImpl$TLSContext",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.AuthorityInfoAccessExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.AuthorityKeyIdentifierExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.BasicConstraintsExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.CRLDistributionPointsExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.CertificatePoliciesExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.ExtendedKeyUsageExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.KeyUsageExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.NetscapeCertTypeExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.PrivateKeyUsageExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.SubjectAlternativeNameExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.security.x509.SubjectKeyIdentifierExtension",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Boolean",
+            "java.lang.Object"
+          ]
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "glob": "META-INF/io.netty.versions.properties"
+    },
+    {
+      "glob": "META-INF/services/ch.qos.logback.classic.spi.Configurator"
+    },
+    {
+      "glob": "META-INF/services/com.fasterxml.jackson.databind.Module"
+    },
+    {
+      "glob": "META-INF/services/com.sun.net.httpserver.spi.HttpServerProvider"
+    },
+    {
+      "glob": "META-INF/services/io.grpc.LoadBalancerProvider"
+    },
+    {
+      "glob": "META-INF/services/io.grpc.ManagedChannelProvider"
+    },
+    {
+      "glob": "META-INF/services/io.grpc.NameResolverProvider"
+    },
+    {
+      "glob": "META-INF/services/java.lang.System$LoggerFinder"
+    },
+    {
+      "glob": "META-INF/services/java.net.spi.InetAddressResolverProvider"
+    },
+    {
+      "glob": "META-INF/services/java.net.spi.URLStreamHandlerProvider"
+    },
+    {
+      "glob": "META-INF/services/java.nio.channels.spi.SelectorProvider"
+    },
+    {
+      "glob": "META-INF/services/javax.xml.parsers.SAXParserFactory"
+    },
+    {
+      "glob": "META-INF/services/net.kyori.adventure.text.logger.slf4j.ComponentLoggerProvider"
+    },
+    {
+      "glob": "META-INF/services/net.kyori.adventure.text.minimessage.MiniMessage$Provider"
+    },
+    {
+      "glob": "META-INF/services/net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer$Provider"
+    },
+    {
+      "glob": "META-INF/services/org.slf4j.spi.SLF4JServiceProvider"
+    },
+    {
+      "glob": "attribute.json"
+    },
+    {
+      "glob": "banner_pattern.json"
+    },
+    {
+      "glob": "block.json"
+    },
+    {
+      "glob": "block_sound_type.json"
+    },
+    {
+      "glob": "cat_variant.json"
+    },
+    {
+      "glob": "chat_type.json"
+    },
+    {
+      "glob": "chicken_variant.json"
+    },
+    {
+      "glob": "cow_variant.json"
+    },
+    {
+      "glob": "damage_type.json"
+    },
+    {
+      "glob": "dialog.json"
+    },
+    {
+      "glob": "dimension_type.json"
+    },
+    {
+      "glob": "enchantment.json"
+    },
+    {
+      "glob": "entity_type.json"
+    },
+    {
+      "glob": "feature_flag.json"
+    },
+    {
+      "glob": "fluid.json"
+    },
+    {
+      "glob": "frog_variant.json"
+    },
+    {
+      "glob": "game_event.json"
+    },
+    {
+      "glob": "instrument.json"
+    },
+    {
+      "glob": "item.json"
+    },
+    {
+      "glob": "jukebox_song.json"
+    },
+    {
+      "glob": "kafka/kafka-version.properties"
+    },
+    {
+      "glob": "logback-prod.xml"
+    },
+    {
+      "glob": "logback-test.scmo"
+    },
+    {
+      "glob": "logback.scmo"
+    },
+    {
+      "glob": "painting_variant.json"
+    },
+    {
+      "glob": "pig_variant.json"
+    },
+    {
+      "glob": "potion_effect.json"
+    },
+    {
+      "glob": "prometheus.properties"
+    },
+    {
+      "glob": "sound_event.json"
+    },
+    {
+      "glob": "tags/attribute.json"
+    },
+    {
+      "glob": "tags/banner_pattern.json"
+    },
+    {
+      "glob": "tags/block.json"
+    },
+    {
+      "glob": "tags/block_sound_type.json"
+    },
+    {
+      "glob": "tags/cat_variant.json"
+    },
+    {
+      "glob": "tags/chat_type.json"
+    },
+    {
+      "glob": "tags/chicken_variant.json"
+    },
+    {
+      "glob": "tags/cow_variant.json"
+    },
+    {
+      "glob": "tags/damage_type.json"
+    },
+    {
+      "glob": "tags/dialog.json"
+    },
+    {
+      "glob": "tags/dimension_type.json"
+    },
+    {
+      "glob": "tags/enchantment.json"
+    },
+    {
+      "glob": "tags/entity_type.json"
+    },
+    {
+      "glob": "tags/feature_flag.json"
+    },
+    {
+      "glob": "tags/fluid.json"
+    },
+    {
+      "glob": "tags/frog_variant.json"
+    },
+    {
+      "glob": "tags/game_event.json"
+    },
+    {
+      "glob": "tags/instrument.json"
+    },
+    {
+      "glob": "tags/item.json"
+    },
+    {
+      "glob": "tags/jukebox_song.json"
+    },
+    {
+      "glob": "tags/painting_variant.json"
+    },
+    {
+      "glob": "tags/pig_variant.json"
+    },
+    {
+      "glob": "tags/potion_effect.json"
+    },
+    {
+      "glob": "tags/sound_event.json"
+    },
+    {
+      "glob": "tags/trim_material.json"
+    },
+    {
+      "glob": "tags/trim_pattern.json"
+    },
+    {
+      "glob": "tags/wolf_sound_variant.json"
+    },
+    {
+      "glob": "tags/wolf_variant.json"
+    },
+    {
+      "glob": "tags/worldgen/biome.json"
+    },
+    {
+      "glob": "trim_material.json"
+    },
+    {
+      "glob": "trim_pattern.json"
+    },
+    {
+      "glob": "wolf_sound_variant.json"
+    },
+    {
+      "glob": "wolf_variant.json"
+    },
+    {
+      "glob": "worldgen/biome.json"
+    },
+    {
+      "module": "java.base",
+      "glob": "jdk/internal/icu/impl/data/icudt76b/nfkc.nrm"
+    },
+    {
+      "module": "java.base",
+      "glob": "jdk/internal/icu/impl/data/icudt76b/uprops.icu"
+    },
+    {
+      "module": "java.base",
+      "glob": "sun/net/idn/uidna.spp"
+    },
+    {
+      "module": "java.logging",
+      "glob": "sun/util/logging/resources/logging_en.properties"
+    },
+    {
+      "module": "java.logging",
+      "glob": "sun/util/logging/resources/logging_en_US.properties"
+    },
+    {
+      "module": "java.xml",
+      "glob": "jdk/xml/internal/jdkcatalog/JDKCatalog.xml"
+    },
+    {
+      "module": "jdk.jfr",
+      "glob": "jdk/jfr/internal/query/view.ini"
+    },
+    {
+      "module": "jdk.jfr",
+      "glob": "jdk/jfr/internal/types/metadata.bin"
+    }
+  ],
+  "bundles": [],
+  "jni": [
+    {
+      "type": "[Lcom.sun.management.internal.DiagnosticCommandArgumentInfo;"
+    },
+    {
+      "type": "[Lcom.sun.management.internal.DiagnosticCommandInfo;"
+    },
+    {
+      "type": "com.sun.management.internal.DiagnosticCommandArgumentInfo",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "java.lang.String",
+            "java.lang.String",
+            "java.lang.String",
+            "boolean",
+            "boolean",
+            "boolean",
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "com.sun.management.internal.DiagnosticCommandInfo",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.String",
+            "java.lang.String",
+            "java.lang.String",
+            "boolean",
+            "java.util.List"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Boolean",
+      "methods": [
+        {
+          "name": "getBoolean",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.util.Arrays",
+      "methods": [
+        {
+          "name": "asList",
+          "parameterTypes": [
+            "java.lang.Object[]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "sun.management.VMManagementImpl",
+      "fields": [
+        {
+          "name": "compTimeMonitoringSupport"
+        },
+        {
+          "name": "currentThreadCpuTimeSupport"
+        },
+        {
+          "name": "objectMonitorUsageSupport"
+        },
+        {
+          "name": "otherThreadCpuTimeSupport"
+        },
+        {
+          "name": "remoteDiagnosticCommandsSupport"
+        },
+        {
+          "name": "synchronizerUsageSupport"
+        },
+        {
+          "name": "threadAllocatedMemorySupport"
+        },
+        {
+          "name": "threadContentionMonitoringSupport"
+        }
+      ]
+    }
+  ]
+}
