@@ -1,7 +1,7 @@
 plugins {
     java
     application
-    id("com.gradleup.shadow") version "9.0.0-rc3"
+    id("com.gradleup.shadow") version "9.2.2"
     id("org.graalvm.buildtools.native") version "0.11.0"
 }
 
@@ -20,17 +20,17 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.emortal.minestom:game-sdk:c30a7db") {
+    implementation("dev.emortal.minestom:game-sdk:3847948") {
         exclude(group = "dev.emortal.api", module = "common-proto-sdk")
     }
 
     implementation("dev.emortal.api:common-proto-sdk:2443a0a")
-    implementation("net.kyori:adventure-text-minimessage:4.23.0")
+    implementation("net.kyori:adventure-text-minimessage:4.25.0")
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 }
 

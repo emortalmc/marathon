@@ -235,7 +235,7 @@ public final class MarathonGame {
     private void refreshDisplays() {
         // the player is added to the game during the configuration state,
         // this stops action bars from being sent to the player during that time
-        if (this.player.getPlayerConnection().getConnectionState() != ConnectionState.PLAY) return;
+        if (this.player.getPlayerConnection().getClientState() != ConnectionState.PLAY) return;
 
         long millisTaken = this.startTimestamp == -1 ? 0 : System.currentTimeMillis() - this.startTimestamp;
         String formattedTime = DATE_FORMAT.format(new Date(millisTaken));
