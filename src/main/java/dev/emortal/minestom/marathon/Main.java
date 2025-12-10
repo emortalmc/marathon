@@ -10,9 +10,12 @@ import dev.emortal.minestom.gamesdk.util.GamePlayerDataRepository;
 import dev.emortal.minestom.marathon.options.BlockPalette;
 import dev.emortal.minestom.marathon.options.Time;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.format.ShadowColor;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.color.Color;
 import net.minestom.server.registry.RegistryKey;
 import net.minestom.server.world.DimensionType;
+import net.minestom.server.world.attribute.EnvironmentAttribute;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -25,9 +28,19 @@ public final class Main {
             .setBlockPalette(BlockPalette.OVERWORLD.name())
             .build();
 
-    public static void main(String[] args) {
+    static void main() {
         MinestomGameServer.create(moduleManager -> {
-            DimensionType dimensionType = DimensionType.builder().ambientLight(1F).build();
+
+            DimensionType overworld = MinecraftServer.getDimensionTypeRegistry().get(DimensionType.OVERWORLD);
+
+            DimensionType dimensionType = DimensionType.builder()
+                    .timelines(overworld.timelines())
+                    .setAttribute(EnvironmentAttribute.CLOUD_COLOR, ShadowColor.fromHexString("#ccffffff"))
+                    .setAttribute(EnvironmentAttribute.FOG_COLOR, new Color(0xc0d8ff))
+                    .setAttribute(EnvironmentAttribute.SKY_COLOR, new Color(0x78a7ff))
+                    .setAttribute(EnvironmentAttribute.CLOUD_HEIGHT, 110f)
+                    .ambientLight(1F)
+                    .build();
             RegistryKey<DimensionType> dimension = MinecraftServer.getDimensionTypeRegistry().register(Key.key("fullbright"), dimensionType);
 
             GamePlayerDataRepository<V1MarathonData> playerStorage = new GamePlayerDataRepository<>(

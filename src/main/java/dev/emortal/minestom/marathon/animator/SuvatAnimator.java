@@ -43,7 +43,7 @@ public final class SuvatAnimator implements BlockAnimator {
         double velocityY = Math.sqrt(-GRAVITY * HEIGHT);
         Point velocityXZ = displacementXZ.div(time);
 
-        Vec combinedVelocity = Vec.fromPoint(velocityXZ.withY(velocityY));
+        Vec combinedVelocity = velocityXZ.withY(velocityY).asVec();
         lastEntity.setVelocity(combinedVelocity.mul(ServerFlag.SERVER_TICKS_PER_SECOND));
 
         lastEntity.setInstance(instance, realLastPoint);

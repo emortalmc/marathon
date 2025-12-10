@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.emortal.minestom:game-sdk:3847948") {
+    implementation("dev.emortal.minestom:game-sdk:fe1f6a1") {
         exclude(group = "dev.emortal.api", module = "common-proto-sdk")
     }
 
@@ -48,6 +48,7 @@ tasks {
 
     withType<JavaCompile> {
         options.encoding = "UTF-8"
+        options.isDeprecation = true
     }
 
     withType<AbstractArchiveTask> {

@@ -14,14 +14,18 @@ import net.minestom.server.timer.TaskSchedule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Supplier;
+
 public final class PathAnimator implements BlockAnimator {
     private @Nullable Entity lastEntity = null;
 
     @Override
     public void setBlockAnimated(@NotNull Instance instance, @NotNull Point point, @NotNull Block block, @NotNull Point lastPoint) {
-        Pos realLastPoint = Pos.fromPoint(lastPoint.add(0.5, 0, 0.5));
+        Pos realLastPoint;
         if (this.lastEntity != null && !this.lastEntity.isRemoved()) {
             realLastPoint = this.lastEntity.getPosition();
+        } else {
+            realLastPoint = lastPoint.add(0.5, 0, 0.5).asPos();
         }
 
         this.lastEntity = new NoPhysicsEntity(EntityType.BLOCK_DISPLAY);
@@ -30,27 +34,57 @@ public final class PathAnimator implements BlockAnimator {
         this.lastEntity.editEntityMeta(BlockDisplayMeta.class, meta -> {
             meta.setBlockState(block);
             meta.setTranslation(new Vec(-0.5, 0.0, -0.5));
-            meta.setPosRotInterpolationDuration(3);
+            meta.setPosRotInterpolationDuration(2);
         });
         Entity finalEntity = this.lastEntity;
 
         this.lastEntity.setInstance(instance, realLastPoint).thenRun(() ->
-                finalEntity.scheduler().buildTask(() -> {
-                    if (finalEntity.isRemoved()) return;
-                    finalEntity.teleport(Pos.fromPoint(point));
-                }).repeat(TaskSchedule.tick(1)).schedule());
+                finalEntity.scheduler().submitTask(new Supplier<>() {
+                    int i = 0;
+                    final int animationTime = 13;
 
-        this.lastEntity.scheduler()
-                .buildTask(() -> {
-                    instance.setBlock(point, block);
-                    finalEntity.scheduleNextTick(Entity::remove);
-                })
-                .delay(TaskSchedule.tick(13))
-                .schedule();
+                    @Override
+                    public TaskSchedule get() {
+                        if (i == animationTime) {
+                            i++;
+                            instance.setBlock(point, block);
+                            return TaskSchedule.tick(1);
+                        }
+                        if (i == animationTime + 1) {
+                            i++;
+                            finalEntity.remove();
+                            return TaskSchedule.stop();
+                        }
+                        if (finalEntity.isRemoved()) return TaskSchedule.stop();
+
+                        double frac = (double)i++ / animationTime;
+
+                        Vec animPoint = lerpVec(realLastPoint, point, easeOutExpo(frac));
+                        finalEntity.teleport(animPoint.asPos());
+                        return TaskSchedule.tick(1);
+                    }
+                }));
     }
 
     @Override
     public void reset() {
         this.lastEntity = null;
     }
+
+    private static double easeOutExpo(double x) {
+        return 1 - Math.pow(2, -10 * x);
+    }
+
+    private static Vec lerpVec(Point a, Point b, double f) {
+        return new Vec(
+                lerp(a.x(), b.x(), f),
+                lerp(a.y(), b.y(), f),
+                lerp(a.z(), b.z(), f)
+        );
+    }
+
+    private static double lerp(double a, double b, double f) {
+        return a + f * (b - a);
+    }
+
 }
